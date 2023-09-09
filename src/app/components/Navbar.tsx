@@ -1,31 +1,13 @@
+'use client'
 import { useState, useEffect } from 'react'
 import useMediaQuery from '../hooks/useMediaQuery'
-import AnchorLink from "react-anchor-link-smooth-scroll"
+import { Icon } from '@mui/material'
+import { Menu } from '@mui/icons-material'
+import Link from 'next/link'
 /* import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars, faX } from '@fortawesome/free-solid-svg-icons' */
 
-type LinkProps = {
-    page: string,
-    currentPage: string,
-    setCurrentPage: (page: string) => void
-}
-
-const SmoothLink = ({ page, currentPage, setCurrentPage }: LinkProps) => {
-    //page names will be capitalised for display. This will convert them to lowercase so they can accurately be compared for conditional rendering. 
-    const lowerCasePage = page.toLowerCase()
-
-    return(
-        <AnchorLink 
-            className={`${currentPage === lowerCasePage ? "text-amber-400" : ""} text-xl text-white cursor-pointer hover:text-amber-400 transition duration-500 hover:no-underline`} 
-            href={`#${lowerCasePage}`}
-            onClick={() => setCurrentPage(lowerCasePage)}
-        >
-            {page === 'Home' ? 'VM' : page}
-        </AnchorLink>
-    )
-}
-
-function NavBar({ currentPage, setCurrentPage }: LinkProps) {
+function NavBar() {
     //using state to toggle navbar menu
     const [ menuToggled, setMenuToggled ] = useState<boolean>(false)
 
@@ -56,32 +38,32 @@ function NavBar({ currentPage, setCurrentPage }: LinkProps) {
                 <div
                     className='flex items-center justify-center'
                 >  
-                    <SmoothLink
-                        page="Home"
-                        currentPage={currentPage}
-                        setCurrentPage={setCurrentPage}
-                    />
+                    <Link
+                        href={'/'}
+                    >
+                        Kafe
+                    </Link>
                 </div>
 
                 {/* menu options */}
                 {aboveSmallScreens
                     ?
                     <div className="flex justify-between gap-20">
-                        <SmoothLink
-                            page="About"
-                            currentPage={currentPage}
-                            setCurrentPage={setCurrentPage}
-                        />
-                        <SmoothLink
-                            page="Portfolio"
-                            currentPage={currentPage}
-                            setCurrentPage={setCurrentPage}
-                        />
-                        <SmoothLink
-                            page="Contact"
-                            currentPage={currentPage}
-                            setCurrentPage={setCurrentPage}
-                        />
+                        <Link
+                            href={'/'}
+                        >
+                            Kafe
+                        </Link>
+                        <Link
+                            href={'/'}
+                        >
+                            Kafe
+                        </Link>
+                        <Link
+                            href={'/'}
+                        >
+                            Kafe
+                        </Link>
                     </div>
                     :
                     /* this is what NavBar will look like for smaller screens when menu is toggled off */
@@ -93,6 +75,9 @@ function NavBar({ currentPage, setCurrentPage }: LinkProps) {
                             icon={faBars} 
                             style={{color: "#f5c211", height:'30px', width:'30px'}} 
                         /> */}
+                        <Icon>
+                            <Menu />
+                        </Icon>
                     </button>
                 }
 
@@ -122,21 +107,21 @@ function NavBar({ currentPage, setCurrentPage }: LinkProps) {
                             /* closes menu after a link is clicked */
                             onClick={() => setMenuToggled(!menuToggled)}
                         >
-                            <SmoothLink
-                                page="About"
-                                currentPage={currentPage}
-                                setCurrentPage={setCurrentPage}
-                            />
-                            <SmoothLink
-                                page="Portfolio"
-                                currentPage={currentPage}
-                                setCurrentPage={setCurrentPage}
-                            />
-                            <SmoothLink
-                                page="Contact"
-                                currentPage={currentPage}
-                                setCurrentPage={setCurrentPage}
-                            />
+                            <Link
+                                href={'/'}
+                            >
+                                Kafe
+                            </Link>
+                            <Link
+                                href={'/'}
+                            >
+                                Kafe
+                            </Link>
+                            <Link
+                                href={'/'}
+                            >
+                                Kafe
+                            </Link>
                         </div>
                     </div>
                 )}
