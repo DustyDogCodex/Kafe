@@ -40,6 +40,7 @@ function NavBar() {
                 >  
                     <Link
                         href={'/'}
+                        className='text-3xl font-extrabold'
                     >
                         Kafe
                     </Link>
@@ -52,17 +53,17 @@ function NavBar() {
                         <Link
                             href={'/'}
                         >
-                            Kafe
+                            About
                         </Link>
                         <Link
                             href={'/'}
                         >
-                            Kafe
+                            Shop
                         </Link>
                         <Link
                             href={'/'}
                         >
-                            Kafe
+                            Roasters
                         </Link>
                     </div>
                     :
@@ -110,17 +111,17 @@ function NavBar() {
                             <Link
                                 href={'/'}
                             >
-                                Kafe
+                                About
                             </Link>
                             <Link
                                 href={'/'}
                             >
-                                Kafe
+                                Shop
                             </Link>
                             <Link
                                 href={'/'}
                             >
-                                Kafe
+                                Roasters
                             </Link>
                         </div>
                     </div>
