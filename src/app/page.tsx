@@ -1,6 +1,7 @@
 import Hero from "./components/Hero"
 import NavBar from "./components/Navbar"
 import Intro from "./components/Intro"
+import Offers from "./components/Offers"
 
 export default function Home() {
     return (
@@ -9,6 +10,7 @@ export default function Home() {
             <div className="container pt-20 w-full">
                 <Hero />
                 <Intro />
+                <Offers />
             </div>
         </main>
     )

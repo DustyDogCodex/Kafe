@@ -49,6 +49,7 @@ function NavBar() {
                 {/* menu options */}
                 {aboveSmallScreens
                     ?
+                    <>
                     <div className="flex justify-between gap-20">
                         <Link
                             href={'/'}
@@ -66,6 +67,24 @@ function NavBar() {
                             Roasters
                         </Link>
                     </div>
+                    <div className="flex justify-between gap-4">
+                        <Link
+                            href={'/'}
+                        >
+                            Search
+                        </Link>
+                        <Link
+                            href={'/'}
+                        >
+                            Login
+                        </Link>
+                        <Link
+                            href={'/'}
+                        >
+                            Cart
+                        </Link>
+                    </div>
+                    </>
                     :
                     /* this is what NavBar will look like for smaller screens when menu is toggled off */
                     <button
@@ -121,6 +140,21 @@ function NavBar() {
                                 href={'/'}
                             >
                                 Roasters
+                            </Link>
+                            <Link
+                                href={'/'}
+                            >
+                                Search
+                            </Link>
+                            <Link
+                                href={'/'}
+                            >
+                                Login
+                            </Link>
+                            <Link
+                                href={'/'}
+                            >
+                                Cart
                             </Link>
                         </div>
                     </div>
