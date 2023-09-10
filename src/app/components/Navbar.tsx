@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react'
 import useMediaQuery from '../hooks/useMediaQuery'
 import { Icon } from '@mui/material'
-import { Menu } from '@mui/icons-material'
+import { Menu, Close } from '@mui/icons-material'
 import Link from 'next/link'
 /* import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars, faX } from '@fortawesome/free-solid-svg-icons' */
@@ -29,7 +29,7 @@ function NavBar() {
 
     return (
         <nav
-            className={`${topOfPage ? "" : "bg-fuchsia-500"} fixed top-0 z-50 w-full flex items-center justify-center`}
+            className={`${topOfPage ? "" : "bg-orange-500"} fixed top-0 z-50 w-full flex items-center justify-center`}
         >
             <div
                 className='w-full flex items-center justify-between py-5 px-10 xl:w-4/5'
@@ -72,10 +72,6 @@ function NavBar() {
                         className="rounded-full p-2 flex items-center justify-center hover:scale-125 transition duration-300"
                         onClick={() => setMenuToggled(true)}
                     >
-                        {/* <FontAwesomeIcon 
-                            icon={faBars} 
-                            style={{color: "#f5c211", height:'30px', width:'30px'}} 
-                        /> */}
                         <Icon>
                             <Menu />
                         </Icon>
@@ -99,6 +95,9 @@ function NavBar() {
                                     icon={faX} 
                                     style={{color: "#f5c211", height:'30px', width:'30px'}} 
                                 /> */}
+                                <Icon>
+                                    <Close />
+                                </Icon>
                             </button>
                         </div>
 
