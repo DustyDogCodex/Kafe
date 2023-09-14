@@ -1,6 +1,9 @@
+'use client'
+import { store } from '@/state/store'
 import './globals.css'
 import type { Metadata } from 'next'
 import { Cinzel, Fauna_One } from 'next/font/google'
+import { Provider } from 'react-redux'
  
 // If loading a variable font, you don't need to specify the font weight
 const cinzel = Cinzel({ subsets: ['latin'] })
@@ -16,9 +19,13 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  return (
-    <html lang="en">
-      <body className={cinzel.className}>{children}</body>
-    </html>
-  )
+    return (
+        <html lang="en">
+            <body className={cinzel.className}>
+                <Provider store={store}>
+                    {children}
+                </Provider>
+            </body>
+        </html>
+    )
 }

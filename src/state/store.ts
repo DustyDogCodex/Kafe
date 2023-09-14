@@ -1,60 +1,13 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { configureStore } from '@reduxjs/toolkit'
+import cartReducer from './cartSlice'
 
-/* initial state for cart */
-const initialState: { isCartOpen: boolean, cart: { id: string, count: number }[], items: [] } = {
-    isCartOpen: false,
-    cart: [],
-    items: []
-}
-
-/* CART SLICE for updating state */
-export const cartSlice = createSlice({
-    name: 'cart',
-    initialState,
-    reducers: {
-        setItems: (state,action) => {
-            state.items = action.payload
-        },
-        /* reducer for adding items to cart */
-        addToCart: (state,action) => {
-            state.cart = [ ...state.cart, action.payload.item ]
-        },
-        /* reducer for removing items for cart */
-        removeFromCart: (state,action) => {
-            state.cart = state.cart.filter((item) => item.id !== action.payload.id)
-        },
-        /* reducer for increasing item count to cart */
-        increaseCount: (state,action) => {
-            state.cart = state.cart.map((item) => {
-                if (item.id === action.payload.item){
-                    item.count++
-                }
-                return item
-            })
-        },
-        /* reducer for decreasing item count to cart */
-        decreaseCount: (state,action) => {
-            state.cart = state.cart.map((item) => {
-                if (item.id === action.payload.item && item.count > 1){
-                    item.count--
-                }
-                return item
-            })
-        },
-        /* reducer for opening/closing cart*/
-        setIsCartOpen: (state,action) => {
-            state.isCartOpen = !state.isCartOpen
-        }
+export const store = configureStore({
+    reducer: {
+        cartReducer
     }
 })
 
-export const {
-    setItems,
-    addToCart,
-    removeFromCart,
-    increaseCount,
-    decreaseCount,
-    setIsCartOpen
-} = cartSlice.actions
-
-export default cartSlice.reducer
+// Infer the `RootState` and `AppDispatch` types from the store itself
+export type RootState = ReturnType<typeof store.getState>
+// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
+export type AppDispatch = typeof store.dispatch

@@ -1,11 +1,11 @@
 'use client'
 import { useState, useEffect } from 'react'
 import useMediaQuery from '../hooks/useMediaQuery'
-import { Icon } from '@mui/material'
-import { Menu, Close } from '@mui/icons-material'
+import { Icon, IconButton } from '@mui/material'
+import { Menu, Close, ShoppingBagTwoTone } from '@mui/icons-material'
 import Link from 'next/link'
-/* import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBars, faX } from '@fortawesome/free-solid-svg-icons' */
+import { useAppDispatch, useAppSelector } from '@/state/hooks'
+import { setIsCartOpen } from '@/state/cartSlice'
 
 function NavBar() {
     //using state to toggle navbar menu
@@ -26,6 +26,9 @@ function NavBar() {
         window.addEventListener('scroll', handleScroll)
         return () => window.removeEventListener('scroll', handleScroll)
     }, [])
+
+    const dispatch = useAppDispatch()
+    const cart = useAppSelector((state) => state.cartReducer.cart)
 
     return (
         <nav
@@ -78,11 +81,11 @@ function NavBar() {
                         >
                             Login
                         </Link>
-                        <Link
-                            href={'/'}
+                        <IconButton
+                            onClick={() => dispatch(setIsCartOpen())}
                         >
-                            Cart
-                        </Link>
+                            <ShoppingBagTwoTone />
+                        </IconButton>
                     </div>
                     </>
                     :
