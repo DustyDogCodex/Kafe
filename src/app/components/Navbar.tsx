@@ -57,7 +57,7 @@ function NavBar() {
                             About
                         </Link>
                         <Link
-                            href={'/'}
+                            href={'/shop'}
                         >
                             Shop
                         </Link>
