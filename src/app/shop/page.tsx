@@ -1,3 +1,4 @@
+import CartModal from "../components/CartModal"
 import NavBar from "../components/Navbar"
 
 function Shop() {
@@ -7,6 +8,7 @@ function Shop() {
             <div className="container pt-20">
                 this is the shop page
             </div>
+            <CartModal />
         </div>
     )
 }

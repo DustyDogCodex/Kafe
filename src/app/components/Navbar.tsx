@@ -1,7 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react'
 import useMediaQuery from '../hooks/useMediaQuery'
-import { Icon, IconButton } from '@mui/material'
+import { Badge, Icon, IconButton } from '@mui/material'
 import { Menu, Close, ShoppingBagTwoTone } from '@mui/icons-material'
 import Link from 'next/link'
 import { useAppDispatch, useAppSelector } from '@/state/hooks'
@@ -27,12 +27,13 @@ function NavBar() {
         return () => window.removeEventListener('scroll', handleScroll)
     }, [])
 
+    /* REDUX - dispatch & cart open/close */
     const dispatch = useAppDispatch()
-    const cart = useAppSelector((state) => state.cartReducer.cart)
+    const cart = useAppSelector((state) => state.cart.cart)
 
     return (
         <nav
-            className={`${topOfPage ? "" : "bg-orange-500"} fixed top-0 z-50 w-full flex items-center justify-center`}
+            className={`${topOfPage ? "" : "bg-orange-500"} fixed top-0 z-20 w-full flex items-center justify-center`}
         >
             <div
                 className='w-full flex items-center justify-between py-5 px-10 xl:w-4/5'
@@ -53,7 +54,7 @@ function NavBar() {
                 {aboveSmallScreens
                     ?
                     <>
-                    <div className="flex justify-between gap-20">
+                    <div className="flex justify-between items-center gap-20">
                         <Link
                             href={'/'}
                         >
@@ -70,7 +71,7 @@ function NavBar() {
                             Roasters
                         </Link>
                     </div>
-                    <div className="flex justify-between gap-4">
+                    <div className="flex justify-between items-center gap-4">
                         <Link
                             href={'/'}
                         >
@@ -81,11 +82,17 @@ function NavBar() {
                         >
                             Login
                         </Link>
-                        <IconButton
-                            onClick={() => dispatch(setIsCartOpen())}
+                        <Badge
+                            badgeContent={cart.length}
+                            color='default'
+                            invisible={cart.length === 0}
                         >
-                            <ShoppingBagTwoTone />
-                        </IconButton>
+                            <IconButton
+                                onClick={() => dispatch(setIsCartOpen())}
+                            >
+                                <ShoppingBagTwoTone />
+                            </IconButton>
+                        </Badge>
                     </div>
                     </>
                     :
