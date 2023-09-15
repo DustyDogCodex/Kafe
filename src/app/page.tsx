@@ -4,6 +4,7 @@ import Intro from "./components/Intro"
 import Offers from "./components/Offers"
 import CartModal from "./components/CartModal"
 import Subscribe from "./components/Subscribe"
+import Footer from "./components/Footer"
 
 export default function Home() {
     return (
@@ -16,6 +17,7 @@ export default function Home() {
                 <Subscribe />
             </div>
             <CartModal />
+            <Footer />
         </main>
     )
 }

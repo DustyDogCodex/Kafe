@@ -4,6 +4,7 @@ import NavBar from "../components/Navbar"
 import ShopCarousel from "../components/ShopCarousel"
 import ItemCard from "../components/ItemCard"
 import Subscribe from "../components/Subscribe"
+import Footer from "../components/Footer"
 
 function Shop() {
     return (
@@ -24,6 +25,7 @@ function Shop() {
                 <Subscribe />
             </div>
             <CartModal />
+            <Footer />
         </div>
     )
 }
