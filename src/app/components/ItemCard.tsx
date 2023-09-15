@@ -1,5 +1,5 @@
 'use client'
-import { useAppDispatch, useAppSelector } from '@/state/hooks'
+import { useAppDispatch } from '@/state/hooks'
 import { useState } from 'react'
 import Image from 'next/image'
 import { IconButton } from '@mui/material'
@@ -19,7 +19,6 @@ type ItemProps =  {
 function ItemCard({ item }: ItemProps) {
     /* REDUX - dispatch & cart open/close */
     const dispatch = useAppDispatch()
-    const cart = useAppSelector((state) => state.cart.cart)
 
     //set count for number of items to be added to cart
     const [ count, setCount ] = useState<number>(1)
@@ -48,15 +47,15 @@ function ItemCard({ item }: ItemProps) {
                             <Remove />
                         </IconButton>
                         <span>{count}</span>
-                        <IconButton onClick={() => setCount(Math.max(count+1))}>
+                        <IconButton onClick={() => setCount(count+1)}>
                             <Add />
                         </IconButton>
                     </div>
 
                     {/* add to cart button */}
                     <button 
-                        onClick={() => dispatch(addToCart({ item: { ...item, count }}))}
-                        className='bg-orange-500 text-white'
+                        onClick={() => dispatch(addToCart({ item: { ...item, count } }))}
+                        className="bg-orange-500 text-white py-2 px-5 rounded-lg"
                     >
                         Add to cart
                     </button>

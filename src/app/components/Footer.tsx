@@ -3,7 +3,7 @@ function Footer() {
         <footer className="bg-slate-200 mt-10 py-10 w-full flex items-center justify-center">
             <div className="flex gap-10 w-4/5">
             <div className="flex flex-col flex-wrap">
-                <h4 className="font-bold mb-4 text-orange-500 text-2xl font-bold">Kafe</h4>
+                <h4 className="font-bold mb-4 text-orange-500 text-2xl">Kafe</h4>
                 <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nam minima quo nesciunt impedit ipsa libero debitis accusantium sequi exercitationem esse.</p>
             </div>
 
