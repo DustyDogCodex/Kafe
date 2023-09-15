@@ -62,7 +62,7 @@ function ShopCarousel() {
                     key={mediaImages[position]}
                     src={mediaImages[position]} 
                     alt="images" 
-                    className="rounded-lg h-full w-full" 
+                    className="rounded-lg h-full w-full object-cover" 
                     variants={variants}  
                     initial="initial"
                     animate='animate'

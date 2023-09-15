@@ -3,6 +3,7 @@ import NavBar from "./components/Navbar"
 import Intro from "./components/Intro"
 import Offers from "./components/Offers"
 import CartModal from "./components/CartModal"
+import Subscribe from "./components/Subscribe"
 
 export default function Home() {
     return (
@@ -12,6 +13,7 @@ export default function Home() {
                 <Hero />
                 <Intro />
                 <Offers />
+                <Subscribe />
             </div>
             <CartModal />
         </main>
