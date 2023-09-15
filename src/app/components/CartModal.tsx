@@ -63,7 +63,7 @@ function CartModal() {
                                         </IconButton>
                                         <span>{item.count}</span>
                                         <IconButton onClick={() => dispatch(increaseCount({ id: item.id }))}>
-                                            <Remove />
+                                            <Add />
                                         </IconButton>
                                     </div>
                                     
