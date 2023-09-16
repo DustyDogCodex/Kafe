@@ -77,8 +77,9 @@ function NavBar() {
                         >
                             Search
                         </Link>
+                        {/* for now, login is directly redirecting to admin dashboard instead of an admin login page. Login and auth will be set up after I set up a skeleton dashboard */}
                         <Link
-                            href={'/'}
+                            href={'/admin'}
                         >
                             Login
                         </Link>

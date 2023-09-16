@@ -9,7 +9,8 @@ const config: Config = {
   theme: {
     extend: {
         fontFamily: {
-            'fauna': 'Fauna One, serif'
+            'fauna': ['var(--font-fauna)'],
+            'cinzel': ['var(--font-cinzel)']
         }
     },
   },

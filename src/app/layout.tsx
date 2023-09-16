@@ -5,9 +5,19 @@ import type { Metadata } from 'next'
 import { Cinzel, Fauna_One } from 'next/font/google'
 import { Provider } from 'react-redux'
  
-// If loading a variable font, you don't need to specify the font weight
-const cinzel = Cinzel({ subsets: ['latin'] })
-export const fauna = Fauna_One({ subsets: ['latin'], weight: '400' })
+// setting up multiple fonts for use
+const fauna = Fauna_One({
+    subsets: ['latin'],
+    display: 'optional',
+    variable: '--font-fauna',
+    weight: '400'
+})
+
+const cinzel = Cinzel({ 
+    subsets: ['latin'],
+    display: 'optional',
+    variable: '--font-cinzel',
+})
 
 export const metadata: Metadata = {
   title: 'Kafe',
@@ -21,7 +31,8 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en">
-            <body className={cinzel.className}>
+            <body className={`${cinzel.variable} ${fauna.variable}`}>
+                {/* redux provider wrapper for access to global state variables */}
                 <Provider store={store}>
                     {children}
                 </Provider>
