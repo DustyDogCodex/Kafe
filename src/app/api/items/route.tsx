@@ -5,6 +5,20 @@ import { NextResponse } from "next/server"
 //connect to database
 connectMongo()
 
+/* ---------------GET ALL ITEMS---------------------------------------------------- */
+export async function GET() {
+    try {
+        //grab all items in database
+        const allItems = await Item.find()
+
+        /* send allItems to client for display */
+        return NextResponse.json({ status: 200, items: allItems })
+    } catch (err: any) {
+        return NextResponse.json({ error: err.message }, { status: 500 })
+    }
+}
+
+/* ---------------CREATE NEW ITEM------------------------------------------------------- */
 export async function POST(request: Request) {
     try {
         /* wait for req body to be received */
@@ -25,6 +39,26 @@ export async function POST(request: Request) {
         await newItem.save()
 
         return NextResponse.json({ status: 200, message: 'Item successfully created', success: true })
+    } catch (err: any) {
+        return NextResponse.json({ error: err.message }, { status: 500 })
+    }
+}
+
+/* ---------------DELETE AN ITEM---------------------------------------------------- */
+export async function DELETE(req: Request) {
+    try {
+        /* wait for req body to be received */
+        const reqBody = await req.json()
+
+        //extracting item info from reqBody
+        const { id } = reqBody
+
+        //delete any associated images?????
+
+        //find and delete relevant item
+        await Item.findByIdAndDelete(id)
+
+        return NextResponse.json({ status: 200, message: 'Item deleted!' })
     } catch (err: any) {
         return NextResponse.json({ error: err.message }, { status: 500 })
     }
