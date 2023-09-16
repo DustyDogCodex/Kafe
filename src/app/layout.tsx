@@ -8,14 +8,14 @@ import { Provider } from 'react-redux'
 // setting up multiple fonts for use
 const fauna = Fauna_One({
     subsets: ['latin'],
-    display: 'optional',
+    display: 'swap',
     variable: '--font-fauna',
     weight: '400'
 })
 
 const cinzel = Cinzel({ 
     subsets: ['latin'],
-    display: 'optional',
+    display: 'swap',
     variable: '--font-cinzel',
 })
 
