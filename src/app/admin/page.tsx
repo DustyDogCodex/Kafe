@@ -13,7 +13,7 @@ function AdminPage() {
 
     //imageID state variable for using public_id created by cloudinary after image upload
     const [ imageID, setImageID ] = useState<string>('')
-    console.log(imageID)
+    
     async function submitItemInfo(data: object) {
         axios.post('http://localhost:3000/api/items',
             { data, imageID }
