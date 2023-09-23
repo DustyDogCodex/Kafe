@@ -1,5 +1,5 @@
 import { Cinzel, Fauna_One } from 'next/font/google'
-import AdminNavBar from '../components/AdminNavbar'
+import LayoutAndStateProvider from '@/utils/LayoutAndStateProvider'
  
 // setting up multiple fonts for use
 const fauna = Fauna_One({
@@ -15,7 +15,7 @@ const cinzel = Cinzel({
     variable: '--font-cinzel',
 })
 
-export default function AdminLayout({
+export default function StoreLayout({
   children,
 }: {
   children: React.ReactNode
@@ -23,11 +23,12 @@ export default function AdminLayout({
     return (
         <html lang="en">
             <head>
-                <title>Admin Dashboard</title>
+                <title>Kafe: Craft Coffee Store</title>
             </head>
             <body className={`${cinzel.variable} ${fauna.variable}`}>
-                <AdminNavBar />
-                {children}
+                <LayoutAndStateProvider>
+                    {children}
+                </LayoutAndStateProvider>
             </body>
         </html>
     )

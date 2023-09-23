@@ -1,7 +1,7 @@
 'use client'
-import NavBar from "../components/Navbar"
-import Footer from "../components/Footer"
-import CartModal from "../components/CartModal"
+import NavBar from "../../components/Navbar"
+import Footer from "../../components/Footer"
+import CartModal from "../../components/CartModal"
 
 function page() {
     return (

@@ -1,7 +1,7 @@
 import { Tabs, Tab } from "@mui/material"
-import ShopCarousel from "../components/ShopCarousel"
-import ItemCard from "../components/ItemCard"
-import Subscribe from "../components/Subscribe"
+import ShopCarousel from "../../components/ShopCarousel"
+import ItemCard from "../../components/ItemCard"
+import Subscribe from "../../components/Subscribe"
 
 function Shop() {
     return (

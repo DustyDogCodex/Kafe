@@ -1,3 +1,4 @@
+/* typescript support for useDispatch and useSelector from Redux docs */
 import { useDispatch, useSelector } from 'react-redux'
 import type { TypedUseSelectorHook } from 'react-redux'
 import type { RootState, AppDispatch } from './store'
