@@ -1,17 +1,22 @@
 'use client'
 import axios from "axios"
 import { useForm } from "react-hook-form"
+import { useState } from 'react'
 import FormErrorMessage from "../components/FormErrorMessage"
 import ServerErrorMessage from "../components/ServerErrorMessage"
 import { CldUploadButton } from 'next-cloudinary'
+import { CldImage } from 'next-cloudinary'
 
 function AdminPage() {
     //react hook form setup
     const { register, handleSubmit, formState: { errors } } = useForm()
 
+    //imageID state variable for using public_id created by cloudinary after image upload
+    const [ imageID, setImageID ] = useState<string>('')
+    console.log(imageID)
     async function submitItemInfo(data: object) {
         axios.post('http://localhost:3000/api/items',
-            data
+            { data, imageID }
         )
         .then(res => console.log(res))
         .catch(err => <ServerErrorMessage message={err.message} />)
@@ -56,12 +61,21 @@ function AdminPage() {
                     {/* cloudinary image upload */}
                     <label htmlFor="image">Item Image:</label>
                     <CldUploadButton 
-                        {...register('image', { required: true })}
                         uploadPreset="dxrlpvpi"
                         className="border w-fit py-2 px-5 my-3 rounded-xl"
+                        onUpload={(result: any) => {
+                            setImageID(result.info.public_id)
+                        }}
                     />
-                    {errors.image && (
-                        errors.image.type === 'required' && <FormErrorMessage message="Item image is required" />
+                    {/* uploaded image preview */}
+                    {imageID && (
+                        <CldImage
+                            width="400"
+                            height="600"
+                            src={imageID}
+                            sizes="100vw"
+                            alt="uploaded image preview"
+                        />
                     )}
 
                     <input 
@@ -72,7 +86,10 @@ function AdminPage() {
 
                     {/* submit button */}
                     <div className="flex items-center justify-center">
-                        <button className="bg-orange-500 text-white px-5 py-2 rounded-xl w-fit">
+                        <button 
+                            type="submit"
+                            className="bg-orange-500 text-white px-5 py-2 rounded-xl w-fit"
+                        >
                             Create new item
                         </button>
                     </div>

@@ -25,14 +25,15 @@ export async function POST(request: Request) {
         const reqBody = await request.json()
 
         //extracting item info from reqBody
-        const { name, price, description, image, category } = reqBody
-
+        const { name, price, description, category } = reqBody.data
+        const { imageID } = reqBody
+        
         const newItem = new Item({
             name,
             price,
             description,
-            image,
-            category
+            image: imageID,
+            category: category ? category : []
         })
 
         //save to database
