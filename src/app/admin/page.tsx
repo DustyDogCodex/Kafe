@@ -3,6 +3,7 @@ import axios from "axios"
 import { useForm } from "react-hook-form"
 import FormErrorMessage from "../components/FormErrorMessage"
 import ServerErrorMessage from "../components/ServerErrorMessage"
+import { CldUploadButton } from 'next-cloudinary'
 
 function AdminPage() {
     //react hook form setup
@@ -52,12 +53,12 @@ function AdminPage() {
                         errors.description.type === 'required' && <FormErrorMessage message="Item description is required" />
                     )}
 
+                    {/* cloudinary image upload */}
                     <label htmlFor="image">Item Image:</label>
-                    <input 
+                    <CldUploadButton 
                         {...register('image', { required: true })}
-                        type="file" 
-                        name="image"
-                        className="p-2 border border-sky-300 rounded-lg my-3"
+                        uploadPreset="dxrlpvpi"
+                        className="border w-fit py-2 px-5 my-3 rounded-xl"
                     />
                     {errors.image && (
                         errors.image.type === 'required' && <FormErrorMessage message="Item image is required" />
@@ -68,9 +69,13 @@ function AdminPage() {
                         placeholder="Add category"
                         className="p-2 border border-sky-300 rounded-lg my-3"
                     />
-                    <button className="bg-orange-500 text-white px-5 py-2 rounded-xl w-fit">
-                        Create new item
-                    </button>
+
+                    {/* submit button */}
+                    <div className="flex items-center justify-center">
+                        <button className="bg-orange-500 text-white px-5 py-2 rounded-xl w-fit">
+                            Create new item
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>
