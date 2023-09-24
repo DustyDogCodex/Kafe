@@ -1,8 +1,8 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import useMediaQuery from '../hooks/useMediaQuery'
 import { Badge, Icon, IconButton } from '@mui/material'
-import { Menu, Close, ShoppingBagTwoTone } from '@mui/icons-material'
+import { Menu, Close } from '@mui/icons-material'
 import Link from 'next/link'
 
 function AdminNavBar() {
@@ -12,22 +12,9 @@ function AdminNavBar() {
     //checking to see if window is above a small screen with custom hook
     const aboveSmallScreens: boolean = useMediaQuery("(min-width: 768px)")
 
-    //determining if navbar is at top of page or not.
-    const [ topOfPage, setTopOfPage ] = useState<boolean>(true)
-
-    useEffect(() => {
-        //using handleScroll to determine if user is browsing top section of the website
-        //this is done to control the background color of the navbar. If user scrolls down the website, bg color changes to red
-        const handleScroll = () => {
-            window.scrollY === 0 ? setTopOfPage(true) : setTopOfPage(false)
-        }
-        window.addEventListener('scroll', handleScroll)
-        return () => window.removeEventListener('scroll', handleScroll)
-    }, [])
-
     return (
         <nav
-            className={`${topOfPage ? "" : "bg-orange-500"} fixed top-0 z-20 w-full flex items-center justify-center`}
+            className="fixed top-0 z-20 bg-black w-full flex items-center justify-center text-amber-400"
         >
             <div
                 className='w-full flex items-center justify-between py-5 px-10 xl:w-4/5'
@@ -38,9 +25,9 @@ function AdminNavBar() {
                 >  
                     <Link
                         href={'/'}
-                        className='text-3xl font-extrabold'
+                        className='text-2xl font-bold'
                     >
-                        Kafe
+                        Welcome, Supreme Leader
                     </Link>
                 </div>
 
@@ -52,17 +39,7 @@ function AdminNavBar() {
                         <Link
                             href={'/'}
                         >
-                            About
-                        </Link>
-                        <Link
-                            href={'/shop'}
-                        >
-                            Shop
-                        </Link>
-                        <Link
-                            href={'/'}
-                        >
-                            Roasters
+                            Store
                         </Link>
                     </div>
                     <div className="flex justify-between items-center gap-4">
@@ -75,7 +52,7 @@ function AdminNavBar() {
                         <Link
                             href={'/admin'}
                         >
-                            Login
+                            Logout
                         </Link>
                     </div>
                     </>
@@ -104,10 +81,6 @@ function AdminNavBar() {
                                 onClick={() => setMenuToggled(!menuToggled)}
                                 className="p-2 rounded-full flex items-center"
                             >
-                                {/* <FontAwesomeIcon 
-                                    icon={faX} 
-                                    style={{color: "#f5c211", height:'30px', width:'30px'}} 
-                                /> */}
                                 <Icon>
                                     <Close />
                                 </Icon>

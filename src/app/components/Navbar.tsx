@@ -121,10 +121,6 @@ function NavBar() {
                                 onClick={() => setMenuToggled(!menuToggled)}
                                 className="p-2 rounded-full flex items-center"
                             >
-                                {/* <FontAwesomeIcon 
-                                    icon={faX} 
-                                    style={{color: "#f5c211", height:'30px', width:'30px'}} 
-                                /> */}
                                 <Icon>
                                     <Close />
                                 </Icon>
