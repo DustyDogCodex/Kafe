@@ -37,7 +37,7 @@ function AdminNavBar() {
                     <>
                     <div className="flex justify-between items-center gap-20">
                         <Link
-                            href={'/'}
+                            href={'/admin'}
                         >
                             Store
                         </Link>
@@ -48,7 +48,7 @@ function AdminNavBar() {
                         >
                             Search
                         </Link>
-                        {/* for now, login is directly redirecting to admin dashboard instead of an admin login page. Login and auth will be set up after I set up a skeleton dashboard */}
+                        {/* for now, logout is directly redirecting to admin dashboard instead of an admin login page. Logout and auth will be set up after I set up a skeleton dashboard */}
                         <Link
                             href={'/admin'}
                         >
@@ -94,19 +94,9 @@ function AdminNavBar() {
                             onClick={() => setMenuToggled(!menuToggled)}
                         >
                             <Link
-                                href={'/'}
+                                href={'/admin'}
                             >
-                                About
-                            </Link>
-                            <Link
-                                href={'/'}
-                            >
-                                Shop
-                            </Link>
-                            <Link
-                                href={'/'}
-                            >
-                                Roasters
+                                Store
                             </Link>
                             <Link
                                 href={'/'}
@@ -114,14 +104,9 @@ function AdminNavBar() {
                                 Search
                             </Link>
                             <Link
-                                href={'/'}
+                                href={'/admin'}
                             >
-                                Login
-                            </Link>
-                            <Link
-                                href={'/'}
-                            >
-                                Cart
+                                Logout
                             </Link>
                         </div>
                     </div>

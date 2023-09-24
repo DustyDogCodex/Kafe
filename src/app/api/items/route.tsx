@@ -12,7 +12,7 @@ export async function GET() {
         const allItems = await Item.find()
 
         /* send allItems to client for display */
-        return NextResponse.json({ status: 200, items: allItems })
+        return NextResponse.json({ status: 200, store: allItems })
     } catch (err: any) {
         return NextResponse.json({ error: err.message }, { status: 500 })
     }

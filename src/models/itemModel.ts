@@ -23,6 +23,6 @@ const itemSchema = new mongoose.Schema({
     }
 })
 
-const Item = mongoose.models.items || mongoose.model('Item', itemSchema)
+const Item = mongoose.models.Item || mongoose.model('Item', itemSchema)
 
 export default Item
