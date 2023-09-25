@@ -8,7 +8,7 @@ import Loading from "../components/Loading"
 
 //prop types for item objects retrieved from server
 type ItemProps = {
-    id: string,
+    _id: string,
     name: string,
     price: number,
     description: string,
@@ -60,9 +60,9 @@ function AdminPage() {
                     /* displaying current items in store */
                     <div>
                         {storeItems.map((item, index) => 
-                            <div 
+                            <Link 
                                 key={index}
-                                id={item.id} 
+                                href={`/admin/edit/${item._id}`} 
                                 className="w-fit flex flex-col items-center bg-slate-200 rounded-xl hover:shadow-xl hover:shadow-orange-400 transition duration-300"
                             >
                                 <CldImage
@@ -75,7 +75,7 @@ function AdminPage() {
                                 />
                                 <span>{item.name}</span>
                                 <span>${item.price}</span>
-                            </div>
+                            </Link>
                         )}
                     </div>
                 }

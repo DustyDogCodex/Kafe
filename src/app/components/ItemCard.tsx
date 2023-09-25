@@ -31,6 +31,7 @@ function ItemCard({ item }: ItemProps) {
             onMouseLeave={() => setIsHovering(false)}
         >
             {/* item image */}
+            {/* this links to the selected item's information page */}
             <Link href={`/item/${item._id}`}>
                 <CldImage
                     width="300"
