@@ -4,7 +4,7 @@ import ServerErrorMessage from "../components/ServerErrorMessage"
 import { CldImage } from 'next-cloudinary'
 import Link from "next/link"
 import { useEffect, useState } from "react"
-import ItemCard from "../components/ItemCard"
+import Loading from "../components/Loading"
 
 //prop types for item objects retrieved from server
 type ItemProps = {
@@ -19,16 +19,28 @@ type ItemProps = {
 function AdminPage() {
     //state variable containing all items in store
     const [ storeItems, setStoreItems ] = useState<ItemProps[]>([])
+
+    //loading animation controller
+    const [ loading, setLoading ] = useState<boolean>(true)
+
+    //server error message
+    const [ error, setError ] = useState<string>('')
     
     /* api call to retrieve all current items in store for display */
     async function getItems() {
         axios.get('http://localhost:3000/api/items')
-        .then(res => setStoreItems(res.data.store))
-        .catch(err => { 
-            if(err){
-                return <ServerErrorMessage message={err.message} />
-            }
+        .then(res => { 
+            setStoreItems(res.data.store)
+            setLoading(false)
         })
+        .catch(err => { 
+            setError(err.message)
+        })
+    }
+
+    //display error message if server responds with error
+    if(error){
+        return <ServerErrorMessage message={error} />
     }
 
     useEffect(() => {
@@ -40,27 +52,33 @@ function AdminPage() {
             <div className="container pt-20 font-fauna">
                 <h1 className="mb-5">Current Store</h1>
 
-                {/* displaying current items in store */}
-                <div>
-                    {storeItems.map((item, index) => 
-                        <div 
-                            key={index}
-                            id={item.id} 
-                            className=""
-                        >
-                            <span>{item.name}</span>
-                            <span>{item.price}</span>
-                            <CldImage
-                                width="300"
-                                height="400"
-                                src={item.image}
-                                sizes="100vw"
-                                alt={`image for ${item.name}`}
-                                className="rounded-xl hover:shadow-xl hover:shadow-orange-400 transition duration-300"
-                            />
-                        </div>
-                    )}
-                </div>
+                {/* display loading screen while data is being fetched from server */}
+                {loading
+                    ?
+                        <Loading />
+                    :
+                    /* displaying current items in store */
+                    <div>
+                        {storeItems.map((item, index) => 
+                            <div 
+                                key={index}
+                                id={item.id} 
+                                className="w-fit flex flex-col items-center bg-slate-200 rounded-b-xl hover:shadow-xl hover:shadow-orange-400 transition duration-300"
+                            >
+                                <CldImage
+                                    width="300"
+                                    height="400"
+                                    src={item.image}
+                                    sizes="100vw"
+                                    alt={`image for ${item.name}`}
+                                    className="rounded-t-xl"
+                                />
+                                <span>{item.name}</span>
+                                <span>${item.price}</span>
+                            </div>
+                        )}
+                    </div>
+                }
 
                 {/* link to page for adding items */}
                 <div className="mt-5">
