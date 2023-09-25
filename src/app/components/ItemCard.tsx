@@ -23,7 +23,7 @@ function ItemCard({ item }: ItemProps) {
     //set count for number of items to be added to cart
     const [ count, setCount ] = useState<number>(1)
     const [ isHovering, setIsHovering ] = useState<boolean>(false)
-    console.log('item id', item )
+    
     return (
         <div 
             className='relative cursor-pointer'
@@ -44,7 +44,7 @@ function ItemCard({ item }: ItemProps) {
             {/* small box with item count and option to add to cart */}
             <div className={`${isHovering ? 'block' : 'hidden'} absolute bottom-5 left-0 w-full px-5`}>
                 <div className='flex justify-between items-center'>
-                    <div className='flex items-center bg-neutral-400 rounded-lg'>
+                    <div className='flex items-center bg-neutral-300 rounded-lg'>
                         <IconButton onClick={() => setCount(Math.max(count-1, 1))}>
                             <Remove />
                         </IconButton>
