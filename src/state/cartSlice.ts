@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit"
 
 /* initial state for cart */
-const initialState: { isCartOpen: boolean, cart: { id: string, name: string, img: string, count: number, price: number }[], items: [] } = {
+const initialState: { isCartOpen: boolean, cart: { id: string, name: string, image: string, count: number, price: number }[], items: [] } = {
     isCartOpen: false,
     cart: [],
     items: []

@@ -63,7 +63,7 @@ function AdminPage() {
                             <div 
                                 key={index}
                                 id={item.id} 
-                                className="w-fit flex flex-col items-center bg-slate-200 rounded-b-xl hover:shadow-xl hover:shadow-orange-400 transition duration-300"
+                                className="w-fit flex flex-col items-center bg-slate-200 rounded-xl hover:shadow-xl hover:shadow-orange-400 transition duration-300"
                             >
                                 <CldImage
                                     width="300"

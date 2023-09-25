@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from '@/state/hooks'
 import { increaseCount, decreaseCount, removeFromCart, setIsCartOpen } from '@/state/cartSlice'
 import { IconButton } from '@mui/material'
 import { Close, Delete, Remove, Add } from '@mui/icons-material'
-import Image from 'next/image'
+import { CldImage } from 'next-cloudinary'
 
 function CartModal() {
     /* REDUX - dispatch & cart open/close */
@@ -39,9 +39,13 @@ function CartModal() {
                             >
                                 {/* item image */}
                                 <div className='flex w-2/5'>
-                                    <Image 
-                                        src={`http://localhost:3000/${item.img}`}
-                                        alt={item.name}
+                                    {/* item image */}
+                                    <CldImage
+                                        width="300"
+                                        height="400"
+                                        src={item.image}
+                                        sizes="100vw"
+                                        alt={`${item.name}`}
                                     />
                                 </div>
 

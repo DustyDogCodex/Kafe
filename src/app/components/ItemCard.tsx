@@ -1,17 +1,16 @@
 'use client'
 import { useAppDispatch } from '@/state/hooks'
 import { useState } from 'react'
-import Image from 'next/image'
 import { IconButton } from '@mui/material'
 import { Add, Remove } from '@mui/icons-material'
 import { addToCart } from '@/state/cartSlice'
+import { CldImage } from 'next-cloudinary'
 
 type ItemProps =  { 
     item: {
         id: string, 
         name: string, 
-        img: string, 
-        count: number, 
+        image: string,  
         price: number
     }
 }
@@ -31,12 +30,12 @@ function ItemCard({ item }: ItemProps) {
             onMouseLeave={() => setIsHovering(false)}
         >
             {/* item image */}
-            <Image 
-                src={`http://localhost:3000/${item.img}`}
+            <CldImage
+                width="300"
+                height="400"
+                src={item.image}
+                sizes="100vw"
                 alt={`${item.name}`}
-                width={300}
-                height={400}
-                className='cursor-pointer'
             />
 
             {/* small box with item count and option to add to cart */}
