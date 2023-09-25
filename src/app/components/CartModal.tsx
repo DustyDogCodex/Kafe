@@ -12,7 +12,7 @@ function CartModal() {
     const isCartOpen = useAppSelector((state) => state.cart.isCartOpen)
 
     //cart total price calculation
-    const totalPrice = cart.reduce((sum: number, item: {count: number, price: number}) => {
+    const totalPrice = cart.reduce((sum: number, item: { count: number, price: number }) => {
         return sum + (item.count * item.price)
     }, 0)
 

@@ -1,42 +1,87 @@
 'use client'
-import NavBar from "../../components/Navbar"
-import CartModal from "../../components/CartModal"
-import Footer from "../../components/Footer"
 import { useAppDispatch, useAppSelector } from '@/state/hooks'
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useParams } from 'next/navigation'
-import Image from "next/image"
+import { CldImage } from 'next-cloudinary'
 import { IconButton } from "@mui/material"
 import { Add, Remove } from "@mui/icons-material"
 import { addToCart } from '@/state/cartSlice'
+import axios from "axios"
+import ServerErrorMessage from "../../../components/ServerErrorMessage"
+import Loading from '@/app/components/Loading'
+
+//prop types for item objects retrieved from server
+type ItemProps = {
+    id: string,
+    name: string,
+    price: number,
+    description: string,
+    image: string,
+    category: string[]
+}
 
 function page() {
     /* REDUX - dispatch & cart open/close */
     const dispatch = useAppDispatch()
 
     //useParams for grabbing item id
-    const params = useParams()
-
+    const itemID = useParams().itemID
+    
     //local state variables
     const [ count, setCount ] = useState<number>(1)
-    const [ item, setItem ] = useState<object>({})
+    const [ item, setItem ] = useState<ItemProps>()
+
+    //loading animation controller
+    const [ loading, setLoading ] = useState<boolean>(true)
+
+    //server error message
+    const [ error, setError ] = useState<string>('')
+    
+    /* api call to retrieve all current items in store for display */
+    async function getItemInfo() {
+        axios.get(`http://localhost:3000/api/items/${itemID}`)
+        .then(res => { 
+            console.log(res)
+            setLoading(false)
+        })
+        .catch(err => { 
+            setError(err.message)
+        })
+    }
+
+    //display error message if server responds with error
+    /* if(error){
+        return <ServerErrorMessage message={error} />
+    } */
+
+    useEffect(() => {
+        getItemInfo()
+    }, [])
 
     return (
         <div className="flex min-h-screen flex-col items-center justify-between">
-            <NavBar />
+
             <div className="container pt-20">
                 {/* item info */}
                 <div className="flex gap-10">
-                    {/* item image */}
-                    <Image 
-                        src={'/coffee-ai-generated.jpg'}
-                        alt="coffee image"
-                        height={800}
-                        width={600}
-                    />
+                    {loading
+                        ?
+                            <Loading />
+                        : 
+                        /* item image */
+                        <CldImage
+                            width="300"
+                            height="400"
+                            src={item!.image}
+                            sizes="100vw"
+                            alt={`image for ${item!.name}`}
+                            className="rounded-t-xl"
+                        />
+                    }
 
                     {/* item details */}
                     <div className="pt-20">
+                        <h1>Item id is {itemID}</h1>
                         <h1 className="text-2xl font-semibold mb-5">Item Name</h1>
                         <span>$20</span>
                         <p className="mt-10 text-wrap">
@@ -75,8 +120,6 @@ function page() {
                     related products
                 </div>
             </div>
-            <CartModal />
-            <Footer />
         </div>
     )
 }

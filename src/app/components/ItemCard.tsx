@@ -5,10 +5,11 @@ import { IconButton } from '@mui/material'
 import { Add, Remove } from '@mui/icons-material'
 import { addToCart } from '@/state/cartSlice'
 import { CldImage } from 'next-cloudinary'
+import Link from 'next/link'
 
 type ItemProps =  { 
     item: {
-        id: string, 
+        _id: string, 
         name: string, 
         image: string,  
         price: number
@@ -22,21 +23,23 @@ function ItemCard({ item }: ItemProps) {
     //set count for number of items to be added to cart
     const [ count, setCount ] = useState<number>(1)
     const [ isHovering, setIsHovering ] = useState<boolean>(false)
-
+    console.log('item id', item )
     return (
         <div 
-            className='relative'
+            className='relative cursor-pointer'
             onMouseEnter={() => setIsHovering(true)}
             onMouseLeave={() => setIsHovering(false)}
         >
             {/* item image */}
-            <CldImage
-                width="300"
-                height="400"
-                src={item.image}
-                sizes="100vw"
-                alt={`${item.name}`}
-            />
+            <Link href={`/item/${item._id}`}>
+                <CldImage
+                    width="300"
+                    height="400"
+                    src={item.image}
+                    sizes="100vw"
+                    alt={`${item.name}`}
+                />
+            </Link>
 
             {/* small box with item count and option to add to cart */}
             <div className={`${isHovering ? 'block' : 'hidden'} absolute bottom-5 left-0 w-full px-5`}>

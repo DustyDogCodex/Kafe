@@ -6,12 +6,11 @@ import Subscribe from "../../components/Subscribe"
 import { useState, useEffect } from 'react'
 import axios from "axios"
 import ServerErrorMessage from "../../components/ServerErrorMessage"
-import { CldImage } from 'next-cloudinary'
 import Loading from "@/app/components/Loading"
 
 //prop types for item objects retrieved from server
 type ItemProps = {
-    id: string,
+    _id: string,
     name: string,
     price: number,
     description: string,
