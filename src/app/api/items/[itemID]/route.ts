@@ -53,3 +53,21 @@ export async function PUT(req: Request) {
         return NextResponse.json({ error: err.message }, { status: 500 })
     }
 }
+
+/* ---------------DELETE ITEM INFO FROM DATABASE ----------------------------------- */
+export async function DELETE(req: Request) {
+    try {
+        /* grab itemID from req url */
+        const itemID = req.url.slice(req.url.lastIndexOf('/') + 1)
+        
+        //delete associated images from cloud ???
+
+        //find and delete relevant item in database
+        await Item.findByIdAndDelete(itemID)        
+        
+        /* send success message to client */
+        return NextResponse.json({ status: 200, message: 'Item deleted!' })
+    } catch (err: any) {
+        return NextResponse.json({ error: err.message }, { status: 500 })
+    }
+}

@@ -51,8 +51,16 @@ function EditPage() {
 
     //put request to update item info
     async function updateItemInfo(data: object) {
-        console.log(data)
         axios.put(`http://localhost:3000/api/items/${itemID}`, { data, imageID })
+        .then(res => {
+            if(res) window.location.reload()
+        })
+        .catch(err => setError(err.message))
+    }
+
+    //delete request to delete item info
+    async function deleteItemInfo() {
+        axios.delete(`http://localhost:3000/api/items/${itemID}`)
         .then(res => {
             if(res) window.location.reload()
         })
@@ -303,7 +311,10 @@ function EditPage() {
                             <button className="bg-sky-400 py-2 px-5 rounded-xl text-white">
                                 Archive
                             </button>
-                            <button className="bg-red-500 py-2 px-5 rounded-xl text-white">
+                            <button 
+                                className="bg-red-500 py-2 px-5 rounded-xl text-white"
+                                onClick={deleteItemInfo}
+                            >
                                 Delete
                             </button>
                         </div>
