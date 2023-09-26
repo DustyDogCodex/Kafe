@@ -25,7 +25,7 @@ function AdminNavBar() {
                 >  
                     <Link
                         href={'/'}
-                        className='text-2xl font-bold'
+                        className='text-lg md:text-2xl font-bold'
                     >
                         Welcome, Supreme Leader
                     </Link>
@@ -58,14 +58,12 @@ function AdminNavBar() {
                     </>
                     :
                     /* this is what NavBar will look like for smaller screens when menu is toggled off */
-                    <button
+                    <Icon
                         className="rounded-full p-2 flex items-center justify-center hover:scale-125 transition duration-300"
                         onClick={() => setMenuToggled(true)}
-                    >
-                        <Icon>
-                            <Menu />
-                        </Icon>
-                    </button>
+                    >    
+                        <Menu />
+                    </Icon>
                 }
 
                 {/* toggleable side menu for small/mobile screens */}
@@ -73,18 +71,16 @@ function AdminNavBar() {
                 {/* after user clicks on a link, the menu will close automatically */}
                 {(
                     <div 
-                        className={`${ aboveSmallScreens ? 'hidden' : '' } fixed ${ menuToggled ? 'top-0' : '-top-[250px]'} h-[250px] right-0 w-full bg-fuchsia-500 rounded-b-xl ease-in-out duration-700`}
+                        className={`${ aboveSmallScreens ? 'hidden' : '' } fixed ${ menuToggled ? 'top-0' : '-top-[250px]'} h-[250px] right-0 w-full bg-black rounded-b-xl ease-in-out duration-700`}
                     >
                         {/* X button on top to close menu */}
-                        <div className="flex justify-end px-4 pt-5 mr-8">
-                            <button 
+                        <div className="flex justify-end p-2">
+                            <Icon 
                                 onClick={() => setMenuToggled(!menuToggled)}
-                                className="p-2 rounded-full flex items-center"
+                                className="p-2 rounded-full flex items-center justify-center mr-5 mt-2"
                             >
-                                <Icon>
-                                    <Close />
-                                </Icon>
-                            </button>
+                                <Close />
+                            </Icon>
                         </div>
 
                         {/* links inside menu */}
