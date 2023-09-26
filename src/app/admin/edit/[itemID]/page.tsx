@@ -7,6 +7,8 @@ import { Check, Close, Edit } from '@mui/icons-material'
 import { IconButton } from "@mui/material"
 import Loading from "@/app/components/Loading"
 import { useForm } from "react-hook-form"
+import FormErrorMessage from "@/app/components/FormErrorMessage"
+import ServerErrorMessage from "@/app/components/ServerErrorMessage"
 
 type ItemProps = {
     id: string,
@@ -26,6 +28,7 @@ function EditPage() {
     //item info
     const [ selectedItem, setSelectedItem ] = useState<ItemProps>()
     const [ loading, setLoading ] = useState<boolean>(true)
+    const [ error, setError ] = useState<string>('')
 
     //toggle controls for input fields
     const [ editName, SetEditName ] = useState<boolean>(false)
@@ -43,24 +46,31 @@ function EditPage() {
             setSelectedItem(res.data.itemInfo)
             setLoading(false)
         })
-        .catch(err => console.log(err))
+        .catch(err => setError(err.message))
     }
 
     //put request to update item info
-    async function updateItemInfo() {
-        axios.put(`http://localhost:3000/api/items/${itemID}`)
+    async function updateItemInfo(data: object) {
+        console.log(data)
+        axios.put(`http://localhost:3000/api/items/${itemID}`, { data, imageID })
         .then(res => {
             if(res) window.location.reload()
         })
-        .catch(err => console.log(err))
+        .catch(err => setError(err.message))
     }
 
     useEffect(() => {
         getItemInfo()
     }, [])
 
+    //reset input fields with fetched values using react hook form
+    useEffect(() => {
+        reset(selectedItem)
+    }, [ selectedItem ])
+
     return (
         <div className="flex min-h-screen h-full flex-col items-center justify-between">
+            {/* {error && <ServerErrorMessage message={error} />} */}
             <div className="container pt-20 font-fauna flex flex-col items-center justify-center">
                 {loading
                     ?
@@ -92,27 +102,32 @@ function EditPage() {
                                     </div>
                             
                                     {/* input for updating name. Only displayed after user clicks edit icon above  */}
-                                    <div className={`${editName ? 'flex' : 'hidden'} items-center`}>
-                                        <input 
-                                            type="text" 
-                                            value={selectedItem?.name}
-                                            className="border border-sky-400 p-2 rounded-xl"
-                                        />
+                                    <div className={`${editName ? 'flex' : 'hidden'} flex-col items-center`}>
+                                        <div className="flex items-center">
+                                            <input 
+                                                {...register('name', { required: true })}
+                                                type="text" 
+                                                className="border border-sky-400 p-2 rounded-xl"
+                                            />
 
-                                        <IconButton 
-                                            className="flex items-center justify-center cursor-pointer"
-                                            style={{ color: 'green' }}
-                                            onClick={() => SetEditName(!editName)}
-                                        >
-                                            <Check />
-                                        </IconButton>
-                                        <IconButton 
-                                            className="flex items-center justify-center cursor-pointer"
-                                            style={{ color: 'red' }}
-                                            onClick={() => SetEditName(!editName)}
-                                        >
-                                            <Close />
-                                        </IconButton>
+                                            <IconButton 
+                                                className="flex items-center justify-center cursor-pointer"
+                                                style={{ color: 'green' }}
+                                                onClick={handleSubmit(updateItemInfo)}
+                                            >
+                                                <Check />
+                                            </IconButton>
+                                            <IconButton 
+                                                className="flex items-center justify-center cursor-pointer"
+                                                style={{ color: 'red' }}
+                                                onClick={() => SetEditName(!editName)}
+                                            >
+                                                <Close />
+                                            </IconButton>
+                                        </div>
+                                        {errors.name && (
+                                            errors.name.type === 'required' && <FormErrorMessage message="Item name is required" />
+                                        )}
                                     </div>
                                 </div>
                             </div>
@@ -136,26 +151,31 @@ function EditPage() {
                             
                                     {/* input for updating price. Only displayed after user clicks edit icon above  */}
                                     <div className={`${editPrice ? 'flex' : 'hidden'}   items-center`}>
-                                        <input 
-                                            type="text" 
-                                            value={selectedItem?.price}
-                                            className="border border-sky-400 p-2 rounded-xl"
-                                        />
+                                        <div className="flex items-center">
+                                            <input 
+                                                {...register('price', { required: true })}
+                                                type="text" 
+                                                className="border border-sky-400 p-2 rounded-xl"
+                                            />
 
-                                        <IconButton 
-                                            className="flex items-center justify-center cursor-pointer"
-                                            style={{ color: 'green' }}
-                                            onClick={() => SetEditPrice(!editPrice)}
-                                        >
-                                            <Check />
-                                        </IconButton>
-                                        <IconButton 
-                                            className="flex items-center justify-center cursor-pointer"
-                                            style={{ color: 'red' }}
-                                            onClick={() => SetEditPrice(!editPrice)}
-                                        >
-                                            <Close />
-                                        </IconButton>
+                                            <IconButton 
+                                                className="flex items-center justify-center cursor-pointer"
+                                                style={{ color: 'green' }}
+                                                onClick={handleSubmit(updateItemInfo)}
+                                            >
+                                                <Check />
+                                            </IconButton>
+                                            <IconButton 
+                                                className="flex items-center justify-center cursor-pointer"
+                                                style={{ color: 'red' }}
+                                                onClick={() => SetEditPrice(!editPrice)}
+                                            >
+                                                <Close />
+                                            </IconButton>
+                                        </div>
+                                        {errors.price && (
+                                            errors.price.type === 'required' && <FormErrorMessage message="Item price is required" />
+                                        )}
                                     </div>
                                 </div>
                             </div>
@@ -179,32 +199,38 @@ function EditPage() {
                             
                                     {/* input for updating description. Only displayed after user clicks edit icon above  */}
                                     <div className={`${editDesc ? 'flex' : 'hidden'}   items-center`}>
-                                        <input 
-                                            type="text" 
-                                            value={selectedItem?.description}
-                                            className="border border-sky-400 p-2 rounded-xl"
-                                        />
+                                        <div className="flex items-center">
+                                            <textarea 
+                                                {...register('description', { required: true })}
+                                                rows={6}
+                                                className="border border-sky-400 p-2 rounded-xl"
+                                            />
 
-                                        <IconButton 
-                                            className="flex items-center justify-center cursor-pointer"
-                                            style={{ color: 'green' }}
-                                            onClick={() => SetEditDesc(!editDesc)}
-                                        >
-                                            <Check />
-                                        </IconButton>
-                                        <IconButton 
-                                            className="flex items-center justify-center cursor-pointer"
-                                            style={{ color: 'red' }}
-                                            onClick={() => SetEditDesc(!editDesc)}
-                                        >
-                                            <Close />
-                                        </IconButton>
+                                            <IconButton 
+                                                className="flex items-center justify-center cursor-pointer"
+                                                style={{ color: 'green' }}
+                                                onClick={handleSubmit(updateItemInfo)}
+                                            >
+                                                <Check />
+                                            </IconButton>
+                                            <IconButton 
+                                                className="flex items-center justify-center cursor-pointer"
+                                                style={{ color: 'red' }}
+                                                onClick={() => SetEditDesc(!editDesc)}
+                                            >
+                                                <Close />
+                                            </IconButton>
+                                        </div>
+                                        {errors.description && (
+                                            errors.description.type === 'required' && <FormErrorMessage message="Item description is required" />
+                                        )}
                                     </div>
                                 </div>
                             </div>
 
                             {/* item image */}
-                            <div className="flex items-center justify-between gap-5 w-full  my-3">
+                            {/* setting containing dive to h-[420px] to prevent div from resizing when user removes image to upload a new image */}
+                            <div className="flex items-center justify-between gap-5 w-full h-[420px] my-3">
                                 <p className="text-xl font-cinzel font-bold">Image</p>
 
                                 <div className="flex items-center">
@@ -230,25 +256,40 @@ function EditPage() {
                             
                                     {/* input for updating name. Only displayed after user clicks edit icon above  */}
                                     <div className={`${editImage ? 'flex' : 'hidden'}   items-center`}>
-                                        <CldUploadButton 
-                                            uploadPreset="dxrlpvpi"
-                                            onUpload={(result: any) => {
-                                                setImageID(result.info.public_id)
-                                            }}
-                                            className="border border-sky-400 p-2 rounded-xl"
-                                        />
+                                        {/* if user has not uploaded an image yet, the upload button is displayed. Once a new image has been uploaded, the CldImage component with the new image is displayed */}
+                                        {!imageID && 
+                                            <CldUploadButton 
+                                                uploadPreset="dxrlpvpi"
+                                                onUpload={(result: any) => {
+                                                    setImageID(result.info.public_id)
+                                                }}
+                                                className="border border-sky-400 p-2 rounded-xl"
+                                            />
+                                        }
+                                        {imageID && 
+                                            <CldImage 
+                                                width='300'
+                                                height='400'
+                                                src={imageID}
+                                                alt="new uploaded image"
+                                                className="rounded-xl"
+                                            />
+                                        }
 
                                         <IconButton 
                                             className="flex items-center justify-center cursor-pointer"
                                             style={{ color: 'green' }}
-                                            onClick={() => SetEditImage(!editImage)}
+                                            onClick={handleSubmit(updateItemInfo)}
                                         >
                                             <Check />
                                         </IconButton>
                                         <IconButton 
                                             className="flex items-center justify-center cursor-pointer"
                                             style={{ color: 'red' }}
-                                            onClick={() => SetEditImage(!editImage)}
+                                            onClick={() => { 
+                                                setImageID('')
+                                                SetEditImage(!editImage)
+                                            }}
                                         >
                                             <Close />
                                         </IconButton>

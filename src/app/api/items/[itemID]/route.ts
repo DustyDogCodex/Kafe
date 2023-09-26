@@ -27,8 +27,25 @@ export async function PUT(req: Request) {
         /* grab itemID from req url */
         const itemID = req.url.slice(req.url.lastIndexOf('/') + 1)
         
-        //find selected item in database
-        const itemInfo = await Item.findByIdAndUpdate(itemID)
+        const reqBody = await req.json()
+
+        //extract info from data object
+        const { name, price, description } = reqBody.data
+        const { imageID } = reqBody 
+        
+        //find relevant item in database
+        //selecting it this way to be able to access image property for this object
+        const selectedItem = await Item.findById(itemID)
+
+        //update selected item in database
+        await selectedItem.updateOne(
+            {
+                name,
+                price,
+                description,
+                image: imageID ? imageID : selectedItem.image
+            }
+        )
         
         /* send itemInfo to client */
         return NextResponse.json({ status: 200, message: 'Item updated!' })

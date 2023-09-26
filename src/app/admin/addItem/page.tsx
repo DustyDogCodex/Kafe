@@ -14,8 +14,16 @@ function AddItemPage() {
 
     //imageID state variable for using public_id created by cloudinary after image upload
     const [ imageID, setImageID ] = useState<string>('')
+    const [ imageError, setImageError ] = useState<boolean>(false)
     
     async function submitItemInfo(data: object) {
+        /* if imageID is empty, no image was uploaded */
+        /* setImage error to true since an image is mandatory */
+        if(!imageID){
+            setImageError(true)
+            return
+        }
+
         axios.post('http://localhost:3000/api/items',
             { data, imageID }
         )
@@ -78,6 +86,7 @@ function AddItemPage() {
                             alt="uploaded image preview"
                         />
                     )}
+                    {imageError && <FormErrorMessage message="An image is required" />}
 
                     <input 
                         type="text" 
