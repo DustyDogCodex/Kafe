@@ -2,10 +2,11 @@
 import { useParams } from "next/navigation"
 import axios from "axios"
 import { useState, useEffect } from 'react'
-import { CldImage } from "next-cloudinary"
+import { CldImage, CldUploadButton } from "next-cloudinary"
 import { Check, Close, Edit } from '@mui/icons-material'
-import { Icon, IconButton } from "@mui/material"
+import { IconButton } from "@mui/material"
 import Loading from "@/app/components/Loading"
+import { useForm } from "react-hook-form"
 
 type ItemProps = {
     id: string,
@@ -19,15 +20,21 @@ type ItemProps = {
 function EditPage() {
     const itemID = useParams().itemID
 
+    //react hook form for validating and submitting user info
+    const { register, handleSubmit, formState: { errors }, reset } = useForm()
+
     //item info
     const [ selectedItem, setSelectedItem ] = useState<ItemProps>()
     const [ loading, setLoading ] = useState<boolean>(true)
 
-    //edit info variables
+    //toggle controls for input fields
     const [ editName, SetEditName ] = useState<boolean>(false)
     const [ editPrice, SetEditPrice ] = useState<boolean>(false)
     const [ editDesc, SetEditDesc ] = useState<boolean>(false)
     const [ editImage, SetEditImage ] = useState<boolean>(false)
+
+    //imageID from cloudinary image upload
+    const [ imageID, setImageID ] = useState<string>('')
 
     //get item info for display
     async function getItemInfo() {
@@ -35,6 +42,15 @@ function EditPage() {
         .then(res => { 
             setSelectedItem(res.data.itemInfo)
             setLoading(false)
+        })
+        .catch(err => console.log(err))
+    }
+
+    //put request to update item info
+    async function updateItemInfo() {
+        axios.put(`http://localhost:3000/api/items/${itemID}`)
+        .then(res => {
+            if(res) window.location.reload()
         })
         .catch(err => console.log(err))
     }
@@ -214,23 +230,25 @@ function EditPage() {
                             
                                     {/* input for updating name. Only displayed after user clicks edit icon above  */}
                                     <div className={`${editImage ? 'flex' : 'hidden'}   items-center`}>
-                                        <input 
-                                            type="text" 
-                                            value={selectedItem?.price}
+                                        <CldUploadButton 
+                                            uploadPreset="dxrlpvpi"
+                                            onUpload={(result: any) => {
+                                                setImageID(result.info.public_id)
+                                            }}
                                             className="border border-sky-400 p-2 rounded-xl"
                                         />
 
                                         <IconButton 
                                             className="flex items-center justify-center cursor-pointer"
                                             style={{ color: 'green' }}
-                                            onClick={() => SetEditPrice(!editPrice)}
+                                            onClick={() => SetEditImage(!editImage)}
                                         >
                                             <Check />
                                         </IconButton>
                                         <IconButton 
                                             className="flex items-center justify-center cursor-pointer"
                                             style={{ color: 'red' }}
-                                            onClick={() => SetEditPrice(!editPrice)}
+                                            onClick={() => SetEditImage(!editImage)}
                                         >
                                             <Close />
                                         </IconButton>
