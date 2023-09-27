@@ -14,7 +14,7 @@ function AdminNavBar() {
 
     return (
         <nav
-            className="fixed top-0 z-20 bg-black w-full flex items-center justify-center text-amber-400"
+            className="fixed top-0 z-20 bg-black w-full flex items-center justify-center text-amber-400 font-cinzel"
         >
             <div
                 className='w-full flex items-center justify-between py-5 px-10 xl:w-4/5'
@@ -24,8 +24,8 @@ function AdminNavBar() {
                     className='flex items-center justify-center'
                 >  
                     <Link
-                        href={'/'}
-                        className='text-lg md:text-2xl font-bold'
+                        href={'/admin'}
+                        className='text-base md:text-2xl font-bold'
                     >
                         Welcome, Supreme Leader
                     </Link>
@@ -35,18 +35,16 @@ function AdminNavBar() {
                 {aboveSmallScreens
                     ?
                     <>
-                    <div className="flex justify-between items-center gap-20">
+                    <div className="flex justify-between items-center gap-4 text-xl">
                         <Link
                             href={'/admin'}
                         >
                             Store
                         </Link>
-                    </div>
-                    <div className="flex justify-between items-center gap-4">
                         <Link
-                            href={'/'}
+                            href={'/admin/orders'}
                         >
-                            Search
+                            Orders
                         </Link>
                         {/* for now, logout is directly redirecting to admin dashboard instead of an admin login page. Logout and auth will be set up after I set up a skeleton dashboard */}
                         <Link
@@ -85,7 +83,7 @@ function AdminNavBar() {
 
                         {/* links inside menu */}
                         <div 
-                            className="flex flex-col items-center gap-8 text-2xl"
+                            className="flex flex-col items-center gap-8 text-xl"
                             /* closes menu after a link is clicked */
                             onClick={() => setMenuToggled(!menuToggled)}
                         >
@@ -95,9 +93,9 @@ function AdminNavBar() {
                                 Store
                             </Link>
                             <Link
-                                href={'/'}
+                                href={'/admin/orders'}
                             >
-                                Search
+                                Orders
                             </Link>
                             <Link
                                 href={'/admin'}

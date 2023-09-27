@@ -21,7 +21,7 @@ const itemSchema = new mongoose.Schema({
         type: Array, 
         default: [] 
     }
-})
+}, { timestamps: true })
 
 const Item = mongoose.models.Item || mongoose.model('Item', itemSchema)
 
