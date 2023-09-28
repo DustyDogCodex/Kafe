@@ -92,6 +92,7 @@ function CartModal() {
                                 <Link 
                                     href={'/shop'}
                                     className='border-b-4 border-b-orange-500 text-xl'
+                                    onClick={() => dispatch(setIsCartOpen())}
                                 >
                                     Shop
                                 </Link>

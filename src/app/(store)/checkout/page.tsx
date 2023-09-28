@@ -10,6 +10,11 @@ function page() {
     //access items in cart
     const cart = useAppSelector((state) => state.cart.cart)
 
+    //cart total price calculation
+    const totalPrice = cart.reduce((sum: number, item: { count: number, price: number }) => {
+        return sum + (item.count * item.price)
+    }, 0)
+
     return (
         <div className="flex min-h-screen flex-col items-center justify-between">
             <div className="container pt-20 font-fauna flex items-start justify-center gap-10">
@@ -172,7 +177,7 @@ function page() {
                     <h1 className="text-3xl font-cinzel">Cart Summary</h1>
                     
                     {/* current items in cart */}
-                    <div>
+                    <div className='bg-neutral-100 p-2 rounded-xl'>
                         {cart.map((item) => (
                             <div 
                                 key={item.id}
@@ -190,15 +195,24 @@ function page() {
                                 </div>
 
                                 {/* item info */}
-                                <div className='flex flex-col items-center justify-between w-3/5'>
-                                    <span>{item.count}X</span>
-                                    <p className='font-bold'>{item.name}</p>
+                                <div className='flex items-center justify-between w-3/5'>
+                                    <p className='font-bold'>
+                                        <span>{item.count}x</span> {item.name}
+                                    </p>
                             
                                     {/* item price */}
-                                    <span className='font-bold'>${item.price}</span>
+                                    <span className='font-bold'>
+                                        ${item.price * item.count}
+                                    </span>
                                 </div>
                             </div>
                         ))}
+
+                        {/* cart total */}
+                        <div className='w-full flex items-center justify-between text-lg font-semibold mt-5'>
+                            <p>TOTAL:</p>
+                            <p>${totalPrice}</p>
+                        </div>
                     </div>
                 </div>
             </div>
