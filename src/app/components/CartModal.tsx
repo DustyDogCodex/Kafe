@@ -26,7 +26,7 @@ function CartModal() {
                 <div className='p-8 overflow-auto h-full'>
                     {/* header & close cart button */}
                     <div className='flex justify-between items-center mb-4'>
-                        <h3>COFFEE CART {cart.length}</h3>
+                        <h3>COFFEE CART {cart.length} {cart.length === 1 ? 'Item' : 'Items'}</h3>
                         <IconButton onClick={() => dispatch(setIsCartOpen())}>
                             <Close />
                         </IconButton>
@@ -34,49 +34,57 @@ function CartModal() {
 
                     {/* items in cart */}
                     <div>
-                        {cart.map((item) => (
-                            <div 
-                                key={item.id}
-                            >
-                                {/* item image */}
-                                <div className='flex w-2/5'>
+                        {cart.length
+                            ?                      
+                            cart.map((item) => (
+                                <div 
+                                    key={item.id}
+                                    className='flex items-center justify-between w-full'
+                                >
                                     {/* item image */}
-                                    <CldImage
-                                        width="150"
-                                        height="200"
-                                        src={item.image}
-                                        sizes="100vw"
-                                        alt={`${item.name}`}
-                                    />
-                                </div>
-
-                                {/* item info */}
-                                <div className='flex w-3/5'>
-                                    <div>
-                                        <p className='font-bold mb-5'>{item.name}</p>
-
-                                        {/* remove item from cart */}
-                                        <IconButton onClick={() => dispatch(removeFromCart({ id: item.id }))}>
-                                            <Delete />
-                                        </IconButton>
+                                    <div className='flex w-2/5'>
+                                        {/* item image */}
+                                        <CldImage
+                                            width="150"
+                                            height="200"
+                                            src={item.image}
+                                            sizes="100vw"
+                                            alt={`${item.name}`}
+                                        />
                                     </div>
 
-                                    {/* increase & decrease item count */}
-                                    <div>
-                                        <IconButton onClick={() => dispatch(decreaseCount({ id: item.id }))}>
-                                            <Remove />
-                                        </IconButton>
-                                        <span>{item.count}</span>
-                                        <IconButton onClick={() => dispatch(increaseCount({ id: item.id }))}>
-                                            <Add />
-                                        </IconButton>
+                                    {/* item info */}
+                                    <div className='flex flex-col w-3/5'>
+                                        <div className='flex items-center justify-between'>
+                                            <p className='font-bold'>{item.name}</p>
+                                        
+                                            {/* remove item from cart */}
+                                            <IconButton onClick={() => dispatch(removeFromCart({ id: item.id }))}>
+                                                <Delete />
+                                            </IconButton>
+                                        </div>
+
+                                        {/* increase & decrease item count */}
+                                        <div className='flex items-center justify-between'>
+                                            {/* item price */}
+                                            <span className='font-bold'>${item.price}</span>
+                                            
+                                            <div className='bg-neutral-300 w-fit rounded-xl'>
+                                                <IconButton onClick={() => dispatch(decreaseCount({ id: item.id }))}>
+                                                    <Remove />
+                                                </IconButton>
+                                                <span>{item.count}</span>
+                                                <IconButton onClick={() => dispatch (increaseCount({ id: item.id }))}>
+                                                    <Add />
+                                                </IconButton>
+                                            </div>
+                                        </div>
                                     </div>
-                                    
-                                    {/* item price */}
-                                    <span className='font-bold'>{item.price}</span>
                                 </div>
-                            </div>
-                        ))}
+                            ))
+                            :
+                            'No items currently in cart'
+                        }
                     </div>
 
                     {/* total price and checkout */}
