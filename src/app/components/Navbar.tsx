@@ -85,7 +85,7 @@ function NavBar() {
                         </Link>
                         <Badge
                             badgeContent={cart.length}
-                            color='default'
+                            color='primary'
                             invisible={cart.length === 0}
                         >
                             <IconButton
@@ -113,7 +113,7 @@ function NavBar() {
                 {/* after user clicks on a link, the menu will close automatically */}
                 {(
                     <div 
-                        className={`${ aboveSmallScreens ? 'hidden' : '' } fixed ${ menuToggled ? 'top-0' : '-top-[250px]'} h-[250px] right-0 w-full bg-fuchsia-500 rounded-b-xl ease-in-out duration-700`}
+                        className={`${ aboveSmallScreens ? 'hidden' : '' } fixed ${ menuToggled ? 'top-0' : '-top-[250px]'} h-[250px] right-0 w-full bg-orange-500 rounded-b-xl ease-in-out duration-700`}
                     >
                         {/* X button on top to close menu */}
                         <div className="flex justify-end px-4 pt-5 mr-8">

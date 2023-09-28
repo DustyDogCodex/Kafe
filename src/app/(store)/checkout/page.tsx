@@ -3,8 +3,6 @@ import { useAppSelector } from '@/state/hooks'
 import { TextField, Checkbox } from "@mui/material"
 import { useState } from 'react'
 import { CldImage } from 'next-cloudinary'
-import IconButton from '@mui/material'
-import { Delete, Remove, Add } from '@mui/icons-material'
 
 function page() {
     const [ checked, setChecked ] = useState<boolean>(true)
@@ -14,7 +12,7 @@ function page() {
 
     return (
         <div className="flex min-h-screen flex-col items-center justify-between">
-            <div className="container pt-20 font-fauna flex items-start justify-center gap-5">
+            <div className="container pt-20 font-fauna flex items-start justify-center gap-10">
                 {/* address & shipping information */}
                 <div className="mt-10 w-1/2">
                     {/* user info and address */}
@@ -178,7 +176,7 @@ function page() {
                         {cart.map((item) => (
                             <div 
                                 key={item.id}
-                                className='flex items-center justify-between w-full'
+                                className='flex items-center justify-between w-full pb-3 border-b border-b-neutral-300'
                             >
                                 {/* item image */}
                                 <div className='flex w-2/5'>
@@ -192,11 +190,12 @@ function page() {
                                 </div>
 
                                 {/* item info */}
-                                <div className='flex w-3/5'>
-                                    <p className='font-bold mb-5'>{item.name}</p>
+                                <div className='flex flex-col items-center justify-between w-3/5'>
+                                    <span>{item.count}X</span>
+                                    <p className='font-bold'>{item.name}</p>
                             
                                     {/* item price */}
-                                    <span className='font-bold'>{item.price}</span>
+                                    <span className='font-bold'>${item.price}</span>
                                 </div>
                             </div>
                         ))}
