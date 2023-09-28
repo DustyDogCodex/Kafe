@@ -4,6 +4,7 @@ import { increaseCount, decreaseCount, removeFromCart, setIsCartOpen } from '@/s
 import { IconButton } from '@mui/material'
 import { Close, Delete, Remove, Add } from '@mui/icons-material'
 import { CldImage } from 'next-cloudinary'
+import Link from 'next/link'
 
 function CartModal() {
     /* REDUX - dispatch & cart open/close */
@@ -41,8 +42,8 @@ function CartModal() {
                                 <div className='flex w-2/5'>
                                     {/* item image */}
                                     <CldImage
-                                        width="300"
-                                        height="400"
+                                        width="150"
+                                        height="200"
                                         src={item.image}
                                         sizes="100vw"
                                         alt={`${item.name}`}
@@ -80,16 +81,17 @@ function CartModal() {
 
                     {/* total price and checkout */}
                     <div className='my-5'>
-                        <div className='flex items-center justify-between'>
+                        <div className='flex items-center justify-between mb-5'>
                             <span>SUBTOTAL</span>
-                            <span>${totalPrice}</span>
+                            <span className='text-xl font-bold'>${totalPrice}</span>
                         </div>
-                        <button 
+                        <Link 
+                            href={'/checkout'}
                             className='bg-orange-500 px-5 py-2 text-white rounded-lg'
-                            onClick={() => setIsCartOpen()}
+                            onClick={() => dispatch(setIsCartOpen())}
                         >
                             CHECKOUT
-                        </button>
+                        </Link>
                     </div>
                 </div>
             </div>
