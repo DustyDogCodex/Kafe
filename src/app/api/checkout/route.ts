@@ -6,9 +6,6 @@ export async function POST(req: Request){
     const reqBody = await req.json()
 
     //getting productIDs from req
-    const { productIDs } = reqBody
+    const { userName, email, products } = reqBody
     
-    if(!productIDs || productIDs.length === 0){
-        return new NextResponse("Product ID's are missing", { status: 400 })
-    }
 }

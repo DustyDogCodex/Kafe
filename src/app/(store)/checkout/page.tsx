@@ -3,6 +3,13 @@ import { useAppSelector } from '@/state/hooks'
 import { TextField, Checkbox } from "@mui/material"
 import { useState } from 'react'
 import { CldImage } from 'next-cloudinary'
+import { loadStripe } from "@stripe/stripe-js"
+import axios from 'axios'
+
+//stripe publishable key
+const stripePromise = loadStripe(
+  "pk_test_51LgU7yConHioZHhlAcZdfDAnV9643a7N1CMpxlKtzI1AUWLsRyrord79GYzZQ6m8RzVnVQaHsgbvN1qSpiDegoPi006QkO0Mlc"
+)
 
 function page() {
     const [ checked, setChecked ] = useState<boolean>(true)
@@ -14,6 +21,29 @@ function page() {
     const totalPrice = cart.reduce((sum: number, item: { count: number, price: number }) => {
         return sum + (item.count * item.price)
     }, 0)
+
+    //fucntion for starting stripe session to make payment
+    async function makePayment(data: object) {
+        const stripe = await stripePromise
+        const requestBody = {
+            userName: [data.firstName, data.lastName].join(" "),
+            email: data.email,
+            products: cart.map(({ id, count }) => ({
+                id,
+                count,
+            })),
+        }
+
+        axios.post("http://localhost:3000/api/checkout", {
+            body: JSON.stringify(requestBody),
+        })
+        .then(async res => {
+            await stripe.redirectToCheckout({
+                sessionId: res.id,
+            })
+        })
+        .catch(err => console.log(err))
+    }
 
     return (
         <div className="flex min-h-screen flex-col items-center justify-between">
@@ -213,6 +243,15 @@ function page() {
                             <p>TOTAL:</p>
                             <p>${totalPrice}</p>
                         </div>
+                    </div>
+
+                    {/* redirect to Stripe for payment and checkout */}
+                    <div className='flex items-center justify-center'>
+                        <button 
+                            className='mt-5 px-5 py-2 text-lg font-fauna bg-orange-500 hover:bg-emerald-500 transition duration-500 rounded-xl text-white'
+                        >
+                            Make Payment
+                        </button>
                     </div>
                 </div>
             </div>
