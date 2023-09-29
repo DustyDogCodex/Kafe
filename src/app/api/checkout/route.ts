@@ -2,6 +2,7 @@ import Stripe from "stripe"
 import { NextResponse } from "next/server"
 import { connectMongo } from "@/utils/mongodb"
 import Item from "@/models/itemModel"
+import Order from "@/models/orderModel"
 
 //connect to database
 connectMongo()
@@ -34,7 +35,27 @@ export async function POST(req: Request){
                 }
             })
         )
-    } catch(err) {
-        NextResponse.json({ status: 500, message: "Oops our servers made a boo boo!" })
+
+        /* create stripe session */
+        const session = await stripe.checkout.sessions.create({
+            customer_email: email,
+            line_items: lineItems,
+            mode: 'payment',
+            success_url: 'http://localhost:3000/checkout/success',
+            cancel_url: 'http://localhost:3000/checkout/canceled',
+        })
+
+        //create order in database?
+        const newOrder = new Order({
+            userName: firstName.trim() + " " + lastName.trim(),
+            email,
+            address: [ line1,line2,city,state,zipcode ].join(','),
+            orderItems: lineItems,
+            isPaid: false,
+        })
+
+        NextResponse.redirect(session.url)
+    } catch(error: any) {
+        NextResponse.json({ status: 500, message: error.message })
     }
 }

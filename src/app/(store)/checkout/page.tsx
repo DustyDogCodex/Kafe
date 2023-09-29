@@ -1,7 +1,6 @@
 'use client'
 import { useAppSelector } from '@/state/hooks'
-import { TextField, Checkbox } from "@mui/material"
-import { useState } from 'react'
+import { TextField } from "@mui/material"
 import { CldImage } from 'next-cloudinary'
 import { loadStripe } from "@stripe/stripe-js"
 import axios from 'axios'
@@ -9,12 +8,10 @@ import { useForm } from 'react-hook-form'
 
 //stripe publishable key
 const stripePromise = loadStripe(
-  "pk_test_51LgU7yConHioZHhlAcZdfDAnV9643a7N1CMpxlKtzI1AUWLsRyrord79GYzZQ6m8RzVnVQaHsgbvN1qSpiDegoPi006QkO0Mlc"
+    'pk_test_51LgU7yConHioZHhlAcZdfDAnV9643a7N1CMpxlKtzI1AUWLsRyrord79GYzZQ6m8RzVnVQaHsgbvN1qSpiDegoPi006QkO0Mlc'
 )
 
 function page() {
-    const [ checked, setChecked ] = useState<boolean>(true)
-
     //use react hook form for form data
     const { register, handleSubmit, formState: { errors } } = useForm()
 
