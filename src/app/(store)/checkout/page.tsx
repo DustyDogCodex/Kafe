@@ -26,22 +26,16 @@ function page() {
     //fucntion for starting stripe session to make payment
     async function makePayment(data: object) {
         const stripe = await stripePromise
-        const requestBody = {
-            data,
-            products: cart.map(({ id, count }) => ({
-                id,
-                count,
-            })),
-        }
+        const products = cart.map(({ id, count }) => ({
+            id,
+            count,
+        }))
+        
 
-        axios.post("http://localhost:3000/api/checkout", {
-            body: JSON.stringify(requestBody),
-        })
-        .then(async res => {
-            await stripe!.redirectToCheckout({
-                sessionId: res.data.id,
-            })
-        })
+        axios.post("http://localhost:3000/api/checkout", 
+            { data, products } 
+        )
+        .then(res => console.log(res))
         .catch(err => console.log(err))
     }
 
@@ -51,7 +45,7 @@ function page() {
                 {/* address & shipping information */}
                 <div className="mt-10 w-1/2">
                     {/* user info and address */}
-                    <form onSubmit={handleSubmit(makePayment)}>
+                    <form>
                         {/* first and last name */}
                         <h1 className="text-3xl font-cinzel">Shipping Information</h1>
                         <div className="flex items-center gap-5">
@@ -172,6 +166,7 @@ function page() {
                         <button 
                             type='submit'
                             className='mt-5 px-5 py-2 text-lg font-fauna bg-orange-500 hover:bg-emerald-500 transition duration-500 rounded-xl text-white'
+                            onClick={handleSubmit(makePayment)}
                         >
                             Make Payment
                         </button>

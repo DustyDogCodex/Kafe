@@ -1,4 +1,5 @@
 import Stripe from "stripe"
+import { stripe } from "@/utils/stripe"
 import { NextResponse } from "next/server"
 import { connectMongo } from "@/utils/mongodb"
 import Item from "@/models/itemModel"
@@ -7,7 +8,16 @@ import Order from "@/models/orderModel"
 //connect to database
 connectMongo()
 
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
+//cors Headers
+const corsHeaders = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization'
+}
+
+export async function OPTIONS() {
+    return NextResponse.json({}, { headers: corsHeaders })
+}
 
 export async function POST(req: Request){
     const reqBody = await req.json()
@@ -36,26 +46,35 @@ export async function POST(req: Request){
             })
         )
 
+        console.log('line items', lineItems)
+
+        //create order in database
+        const newOrder = new Order({
+            userName: firstName.trim() + " " + lastName.trim(),
+            email,
+            address: [ line1,line2,city,state,zipcode ].join(','),
+            orderItems: products.map((product: { id: string, count: number }) =>  
+                ({ 
+                    id: product.id, 
+                    quantity: product.count 
+                })
+            ),
+            isPaid: false,
+        })
+
+        console.log('new order', newOrder)
+
         /* create stripe session */
         const session = await stripe.checkout.sessions.create({
             customer_email: email,
             line_items: lineItems,
             mode: 'payment',
             success_url: 'http://localhost:3000/checkout/success',
-            cancel_url: 'http://localhost:3000/checkout/canceled',
+            cancel_url: 'http://localhost:3000/checkout/canceled'
         })
 
-        //create order in database?
-        const newOrder = new Order({
-            userName: firstName.trim() + " " + lastName.trim(),
-            email,
-            address: [ line1,line2,city,state,zipcode ].join(','),
-            orderItems: lineItems,
-            isPaid: false,
-        })
-
-        NextResponse.redirect(session.url)
+        return NextResponse.json({ url: session.url }, { headers: corsHeaders })
     } catch(error: any) {
-        NextResponse.json({ status: 500, message: error.message })
+        return NextResponse.json({ status: 500, message: error.message })
     }
 }
