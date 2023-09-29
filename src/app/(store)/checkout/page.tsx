@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { CldImage } from 'next-cloudinary'
 import { loadStripe } from "@stripe/stripe-js"
 import axios from 'axios'
+import { useForm } from 'react-hook-form'
 
 //stripe publishable key
 const stripePromise = loadStripe(
@@ -13,6 +14,9 @@ const stripePromise = loadStripe(
 
 function page() {
     const [ checked, setChecked ] = useState<boolean>(true)
+
+    //use react hook form for form data
+    const { register, handleSubmit, formState: { errors } } = useForm()
 
     //access items in cart
     const cart = useAppSelector((state) => state.cart.cart)
@@ -26,8 +30,7 @@ function page() {
     async function makePayment(data: object) {
         const stripe = await stripePromise
         const requestBody = {
-            userName: [data.firstName, data.lastName].join(" "),
-            email: data.email,
+            data,
             products: cart.map(({ id, count }) => ({
                 id,
                 count,
@@ -38,8 +41,8 @@ function page() {
             body: JSON.stringify(requestBody),
         })
         .then(async res => {
-            await stripe.redirectToCheckout({
-                sessionId: res.id,
+            await stripe!.redirectToCheckout({
+                sessionId: res.data.id,
             })
         })
         .catch(err => console.log(err))
@@ -51,52 +54,69 @@ function page() {
                 {/* address & shipping information */}
                 <div className="mt-10 w-1/2">
                     {/* user info and address */}
-                    <form className="">
+                    <form onSubmit={handleSubmit(makePayment)}>
                         {/* first and last name */}
-                        <h1 className="text-3xl font-cinzel">Shipping Address</h1>
+                        <h1 className="text-3xl font-cinzel">Shipping Information</h1>
                         <div className="flex items-center gap-5">
                             <TextField
+                                {...register('firstName', { required: true })}
                                 fullWidth
                                 variant="outlined"
                                 label="First Name"
                                 className="my-2 rounded-xl"
                             />
                             <TextField 
+                                {...register('lastName', { required: true })}
                                 fullWidth
                                 variant="outlined"
                                 label="Last Name"
                                 className="my-2 rounded-xl"
                             />
                         </div>
+
+                        {/* email */}
+                        <TextField
+                            {...register('email', { required: true })}
+                            fullWidth
+                            variant="outlined"
+                            label="Email"
+                            className="my-2 rounded-xl"
+                        />
                         
                         {/* shipping address */}
+                        <h3 className='mt-5 text-xl font-cinzel'>Shipping Address</h3>
                         <div>
                             <TextField 
+                                {...register('line1', { required: true })}
                                 fullWidth
                                 variant="outlined"
-                                label="Line 1"
+                                label="Address Line 1"
                                 className="my-2 rounded-xl"
                             />
                             <TextField 
+                                {...register('line2', { required: true })}
                                 fullWidth
                                 variant="outlined"
-                                label="Line 2"
+                                label="Address Line 2"
                                 className="my-2 rounded-xl"
                             />
                             <div className="flex items-center gap-5">
                                 <TextField 
+                                    {...register('city', { required: true })}
                                     fullWidth
                                     variant="outlined"
                                     label="City"
                                     className="my-2 rounded-xl"
                                 />
                                 <TextField 
+                                    {...register('state', { required: true })}
                                     fullWidth
                                     variant="outlined"
                                     label="State"
                                     className="my-2 rounded-xl"
                                 />
                                 <TextField 
+                                    {...register('zipCode', { required: true })}
                                     fullWidth
                                     variant="outlined"
                                     label="Zip Code"
@@ -153,6 +173,7 @@ function page() {
                     {/* redirect to Stripe for payment and checkout */}
                     <div className='flex items-center justify-center'>
                         <button 
+                            type='submit'
                             className='mt-5 px-5 py-2 text-lg font-fauna bg-orange-500 hover:bg-emerald-500 transition duration-500 rounded-xl text-white'
                         >
                             Make Payment
