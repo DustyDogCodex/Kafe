@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react'
 import axios from "axios"
 import ServerErrorMessage from "../../components/ServerErrorMessage"
 import Loading from "@/app/components/Loading"
+import toast from 'react-hot-toast'
 
 //prop types for item objects retrieved from server
 type ItemProps = {
@@ -46,7 +47,18 @@ function Shop() {
     }
 
     useEffect(() => {
+        //get items for display
         getItems()
+
+        // Check to see if this is a redirect back from Checkout
+        const query = new URLSearchParams(window.location.search)
+        if (query.get('success')) {
+            toast.success('Order placed! You will receive an email confirmation.')
+        }
+
+        if (query.get('canceled')) {
+            toast.error('Order canceled -- continue to shop around and checkout when you’re ready!')
+        }
     }, [])
 
     return (

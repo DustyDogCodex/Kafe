@@ -69,8 +69,8 @@ export async function POST(req: Request){
             customer_email: email,
             line_items: lineItems,
             mode: 'payment',
-            success_url: 'http://localhost:3000/checkout?success=1',
-            cancel_url: 'http://localhost:3000/checkout?canceled=1',
+            success_url: 'http://localhost:3000/shop?success=1',
+            cancel_url: 'http://localhost:3000/shop?canceled=1',
             metadata: {
                 orderID: newOrder._id
             }

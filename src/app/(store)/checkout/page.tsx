@@ -28,7 +28,7 @@ function page() {
         const stripe = await stripePromise
         const products = cart.map(({ _id, count }) => ({
             _id,
-            count,
+            count
         }))
         
         /* post request for starting stripe checkout session */
