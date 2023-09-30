@@ -1,4 +1,3 @@
-import Stripe from "stripe"
 import { stripe } from "@/utils/stripe"
 import { NextResponse } from "next/server"
 import { connectMongo } from "@/utils/mongodb"
@@ -25,13 +24,12 @@ export async function POST(req: Request){
     //getting extracting data from reqBody
     const { firstName, lastName, email, line1, line2, city, state, zipcode } = reqBody.data
     const { products } = reqBody
-    console.log('products',products)
+    
     try {
         //retrieve item information
         const lineItems = await Promise.all(
             products.map(async(product: { _id: string, count: number }) => {
                 const item = await Item.findById(product._id)
-                console.log('item',item)
                 /* returning information in the format specified in stripe docs */
                 return {
                     price_data: {
@@ -45,8 +43,6 @@ export async function POST(req: Request){
                 }
             })
         )
-
-        console.log('line items', lineItems)
 
         //create order in database
         const newOrder = new Order({

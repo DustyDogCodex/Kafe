@@ -41,11 +41,6 @@ function Shop() {
         })
     }
 
-    //display error message if server responds with error
-    if(error){
-        return <ServerErrorMessage message={error} />
-    }
-
     useEffect(() => {
         //get items for display
         getItems()
@@ -57,7 +52,7 @@ function Shop() {
         }
 
         if (query.get('canceled')) {
-            toast.error('Order canceled -- continue to shop around and checkout when you’re ready!')
+            toast.error('Order canceled. Continue to shop around and checkout when you’re ready!')
         }
     }, [])
 
