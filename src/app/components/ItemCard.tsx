@@ -6,6 +6,7 @@ import { Add, Remove } from '@mui/icons-material'
 import { addToCart } from '@/state/cartSlice'
 import { CldImage } from 'next-cloudinary'
 import Link from 'next/link'
+import toast from 'react-hot-toast'
 
 type ItemProps =  { 
     item: {
@@ -57,7 +58,10 @@ function ItemCard({ item }: ItemProps) {
 
                     {/* add to cart button */}
                     <button 
-                        onClick={() => dispatch(addToCart({ item: { ...item, count } }))}
+                        onClick={() => { 
+                            dispatch(addToCart({ item: { ...item, count } }))
+                            toast.success(`${item.name} was added to cart`)
+                        }}
                         className="bg-orange-500 text-white py-2 px-5 rounded-lg"
                     >
                         Add to cart

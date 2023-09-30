@@ -1,5 +1,7 @@
 import { Cinzel, Fauna_One } from 'next/font/google'
-import LayoutAndStateProvider from '@/utils/LayoutAndStateProvider'
+import StateProvider from '@/utils/StateProvider'
+import StoreLayoutProvider from '@/utils/StoreLayoutProvider'
+import { ToastProvider } from '@/utils/ToastProvider'
  
 // setting up multiple fonts for use
 const fauna = Fauna_One({
@@ -26,9 +28,12 @@ export default function StoreLayout({
                 <title>Kafe: Craft Coffee Store</title>
             </head>
             <body className={`${cinzel.variable} ${fauna.variable}`}>
-                <LayoutAndStateProvider>
-                    {children}
-                </LayoutAndStateProvider>
+                <StateProvider>
+                    <StoreLayoutProvider>
+                        <ToastProvider />
+                        {children}
+                    </StoreLayoutProvider>
+                </StateProvider>
             </body>
         </html>
     )
