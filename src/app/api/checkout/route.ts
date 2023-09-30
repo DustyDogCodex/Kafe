@@ -48,7 +48,7 @@ export async function POST(req: Request){
         const newOrder = new Order({
             userName: firstName.trim() + " " + lastName.trim(),
             email,
-            address: [ line1,line2,city,state,zipcode ].join(','),
+            address: [ line1,line2,city,state,zipcode ].filter((x) => x !== null).join(', '),
             orderItems: products.map((product: { _id: string, count: number }) =>  
                 ({ 
                     productID: product._id, 
