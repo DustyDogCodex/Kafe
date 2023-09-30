@@ -5,6 +5,7 @@ import { IconButton } from '@mui/material'
 import { Close, Delete, Remove, Add } from '@mui/icons-material'
 import { CldImage } from 'next-cloudinary'
 import Link from 'next/link'
+import toast from 'react-hot-toast'
 
 function CartModal() {
     /* REDUX - dispatch & cart open/close */
@@ -40,7 +41,7 @@ function CartModal() {
                             ?                      
                             cart.map((item) => (
                                 <div 
-                                    key={item.id}
+                                    key={item._id}
                                     className='flex items-center justify-between w-full pb-3 border-b border-b-neutral-300'
                                 >
                                     {/* item image */}
@@ -61,7 +62,10 @@ function CartModal() {
                                             <p className='font-bold'>{item.name}</p>
                                         
                                             {/* remove item from cart */}
-                                            <IconButton onClick={() => dispatch(removeFromCart({ id: item.id }))}>
+                                            <IconButton onClick={() => { 
+                                                dispatch(removeFromCart({ id: item._id }))
+                                                toast.success(`${item.name} was removed from cart`)
+                                            }}>
                                                 <Delete />
                                             </IconButton>
                                         </div>
@@ -72,11 +76,11 @@ function CartModal() {
                                             <span className='font-bold'>${item.price}</span>
                                             
                                             <div className='bg-neutral-300 w-fit rounded-xl'>
-                                                <IconButton onClick={() => dispatch(decreaseCount({ id: item.id }))}>
+                                                <IconButton onClick={() => dispatch(decreaseCount({ id: item._id }))}>
                                                     <Remove />
                                                 </IconButton>
                                                 <span>{item.count}</span>
-                                                <IconButton onClick={() => dispatch (increaseCount({ id: item.id }))}>
+                                                <IconButton onClick={() => dispatch (increaseCount({ id: item._id }))}>
                                                     <Add />
                                                 </IconButton>
                                             </div>
@@ -85,6 +89,7 @@ function CartModal() {
                                 </div>
                             ))
                             :
+                            /* if no items in cart, show link to shop page */
                             <div className='w-full flex flex-col items-center justify-center'>
                                 <p className='text-2xl text-neutral-300 mb-5'>
                                     Your cart is craving some delicious coffee

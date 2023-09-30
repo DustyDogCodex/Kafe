@@ -29,8 +29,8 @@ export default function StoreLayout({
             </head>
             <body className={`${cinzel.variable} ${fauna.variable}`}>
                 <StateProvider>
+                    <ToastProvider />
                     <StoreLayoutProvider>
-                        <ToastProvider />
                         {children}
                     </StoreLayoutProvider>
                 </StateProvider>
