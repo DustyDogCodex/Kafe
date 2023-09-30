@@ -17,7 +17,7 @@ function page() {
 
     //access items in cart
     const cart = useAppSelector((state) => state.cart.cart)
-
+    
     //cart total price calculation
     const totalPrice = cart.reduce((sum: number, item: { count: number, price: number }) => {
         return sum + (item.count * item.price)
@@ -26,16 +26,17 @@ function page() {
     //fucntion for starting stripe session to make payment
     async function makePayment(data: object) {
         const stripe = await stripePromise
-        const products = cart.map(({ id, count }) => ({
-            id,
+        const products = cart.map(({ _id, count }) => ({
+            _id,
             count,
         }))
         
-
+        /* post request for starting stripe checkout session */
         axios.post("http://localhost:3000/api/checkout", 
             { data, products } 
         )
-        .then(res => console.log(res))
+        /* redirecting to stripe checkout session provided in response */
+        .then(res => window.location.assign(res.data.url))
         .catch(err => console.log(err))
     }
 
@@ -126,7 +127,7 @@ function page() {
                     <div className='bg-neutral-100 p-2 rounded-xl'>
                         {cart.map((item) => (
                             <div 
-                                key={item.id}
+                                key={item._id}
                                 className='flex items-center justify-between w-full pb-3 border-b border-b-neutral-300'
                             >
                                 {/* item image */}

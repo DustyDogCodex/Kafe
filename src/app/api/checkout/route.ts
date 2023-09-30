@@ -25,13 +25,13 @@ export async function POST(req: Request){
     //getting extracting data from reqBody
     const { firstName, lastName, email, line1, line2, city, state, zipcode } = reqBody.data
     const { products } = reqBody
-    
+    console.log('products',products)
     try {
         //retrieve item information
         const lineItems = await Promise.all(
-            products.map(async(product: { id: string, count: number }) => {
-                const item = await Item.findById(product.id)
-
+            products.map(async(product: { _id: string, count: number }) => {
+                const item = await Item.findById(product._id)
+                console.log('item',item)
                 /* returning information in the format specified in stripe docs */
                 return {
                     price_data: {
@@ -53,9 +53,9 @@ export async function POST(req: Request){
             userName: firstName.trim() + " " + lastName.trim(),
             email,
             address: [ line1,line2,city,state,zipcode ].join(','),
-            orderItems: products.map((product: { id: string, count: number }) =>  
+            orderItems: products.map((product: { _id: string, count: number }) =>  
                 ({ 
-                    id: product.id, 
+                    productID: product._id, 
                     quantity: product.count 
                 })
             ),
@@ -70,7 +70,10 @@ export async function POST(req: Request){
             line_items: lineItems,
             mode: 'payment',
             success_url: 'http://localhost:3000/checkout/success',
-            cancel_url: 'http://localhost:3000/checkout/canceled'
+            cancel_url: 'http://localhost:3000/checkout/canceled',
+            metadata: {
+                orderID: newOrder._id
+            }
         })
 
         return NextResponse.json({ url: session.url }, { headers: corsHeaders })
