@@ -35,7 +35,7 @@ export async function POST(req: Request){
             // Then define and call a function to handle the event payment_intent.succeeded
             // if payment succeeded, update order isPaid property in database
             const order = await Order.findByIdAndUpdate(
-                { _id: session?.metadata?.orderID},
+                { _id: session?.metadata?.orderID },
                 {
                     isPaid: true
                 }
