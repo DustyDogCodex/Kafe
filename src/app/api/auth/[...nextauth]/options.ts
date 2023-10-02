@@ -3,6 +3,7 @@ import { connectMongo } from '@/utils/mongodb'
 import { NextAuthOptions } from 'next-auth'
 import CredentialsProvider from "next-auth/providers/credentials"
 import GoogleProvider from "next-auth/providers/google"
+import bcrypt from 'bcrypt'
 
 //connect to database to check credentials
 connectMongo()
@@ -21,10 +22,14 @@ export const options: NextAuthOptions = {
                 password: { label: "Password", type: "password", placeholder: "your-super-secret-password" }
             },
             async authorize(credentials, req) {
-                // Add logic here to look up the user from the credentials supplied
-                const user = await Admin.findOne({ username: credentials?.username })
+                // if credentials are empty return null
+                if(!credentials) return null
 
-                if (user && user.password === credentials?.password) {
+                /* find relevant admin in database and check passwords */
+                const user = await Admin.findOne({ username: credentials?.username })
+                const passwordMatch = await bcrypt.compare(credentials?.password!, user.password)
+                
+                if (user && passwordMatch) {
                     // Any object returned will be saved in `user` property of the JWT
                     return user
                 } else {

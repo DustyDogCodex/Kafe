@@ -15,6 +15,7 @@ function AddItemPage() {
     //imageID state variable for using public_id created by cloudinary after image upload
     const [ imageID, setImageID ] = useState<string>('')
     const [ imageError, setImageError ] = useState<boolean>(false)
+    const [ error, setError ] = useState<string>('')
     
     async function submitItemInfo(data: object) {
         /* if imageID is empty, no image was uploaded */
@@ -28,13 +29,16 @@ function AddItemPage() {
             { data, imageID }
         )
         .then(res => console.log(res))
-        .catch(err => <ServerErrorMessage message={err.message} />)
+        .catch(err => setError(err.message))
     }
 
     return (
         <div className="flex min-h-screen h-full flex-col items-center justify-between">
             <div className="container pt-20 font-fauna">
                 <h1 className="text-2xl text-center font-cinzel">Add new item</h1>
+                {/* display error if it occurs */}
+                {error && <ServerErrorMessage message={error} />}
+
                 {/* form for adding a new item to collection */}
                 <form className="flex flex-col" onSubmit={handleSubmit(submitItemInfo)}>
                     <input 

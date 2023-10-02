@@ -20,6 +20,7 @@ function NewUserModal({ closeModal }: ModalProps) {
     const [ passwordError, setPasswordError ] = useState<boolean>(false)
     const [ success, setSuccess ] = useState<boolean>(false)
     const [ error, setError ] = useState<string>('')
+    const [ invalidUsername, setInvalidUsername ] = useState<boolean>(false)
 
     function createNewUser(data: object){
         //check if passwords match
@@ -27,11 +28,13 @@ function NewUserModal({ closeModal }: ModalProps) {
             setPasswordError(true)
         } else {
             axios.post(`http://localhost:3000/api/auth/newUser`,
-                data
+                { data }
             )
             .then(res => {
                 if(res.data.message === 'success'){
                     setSuccess(true)
+                } else if (res.data.message === 'duplicate'){
+                    setInvalidUsername(true)
                 }
             })
             .catch(err => setError(err.message))
@@ -55,6 +58,7 @@ function NewUserModal({ closeModal }: ModalProps) {
                 {passwordError && <Alert severity="error">Please make sure your passwords match</Alert>}
                 {success && <Alert severity="success">Admin account was successfully created</Alert>}
                 {error && <Alert severity="error">{error}</Alert>}
+                {invalidUsername && <Alert severity="error">This username already exists. Please choose a different one.</Alert>}
 
                 {/* form for creating new user */}
                 <form 
