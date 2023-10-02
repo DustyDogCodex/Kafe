@@ -1,7 +1,7 @@
 'use client'
 import { useState } from 'react'
 import useMediaQuery from '../hooks/useMediaQuery'
-import { Badge, Icon, IconButton } from '@mui/material'
+import { Icon } from '@mui/material'
 import { Menu, Close } from '@mui/icons-material'
 import Link from 'next/link'
 
@@ -45,6 +45,11 @@ function AdminNavBar() {
                             href={'/admin/orders'}
                         >
                             Orders
+                        </Link>
+                        <Link
+                            href={'/admin/settings'}
+                        >
+                            Settings
                         </Link>
                         {/* for now, logout is directly redirecting to admin dashboard instead of an admin login page. Logout and auth will be set up after I set up a skeleton dashboard */}
                         <Link

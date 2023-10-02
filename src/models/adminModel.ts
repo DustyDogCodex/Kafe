@@ -5,6 +5,9 @@ const adminSchema = new mongoose.Schema({
         type: String , 
         required: [true, "Please provide an username"]
     },
+    googleID: { 
+        type: String
+    },
     password: { 
         type: String,
         required: [true, "Please provide a password"]
