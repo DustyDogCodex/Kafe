@@ -45,7 +45,7 @@ function Shop() {
         //get items for display
         getItems()
 
-        // Check to see if this is a redirect back from Checkout
+        // Check to see if this is a redirect back from stripe checkout
         const query = new URLSearchParams(window.location.search)
         if (query.get('success')) {
             toast.success('Order placed! You will receive an email confirmation.')

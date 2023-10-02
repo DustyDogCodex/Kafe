@@ -139,7 +139,7 @@ function NavBar() {
                                 About
                             </Link>
                             <Link
-                                href={'/'}
+                                href={'/shop'}
                             >
                                 Shop
                             </Link>
@@ -154,15 +154,21 @@ function NavBar() {
                                 Search
                             </Link>
                             <Link
-                                href={'/'}
+                                href={'/admin'}
                             >
                                 Login
                             </Link>
-                            <Link
-                                href={'/'}
+                            <Badge
+                                badgeContent={cart.length}
+                                color='primary'
+                                invisible={cart.length === 0}
                             >
-                                Cart
-                            </Link>
+                                <IconButton
+                                    onClick={() => dispatch(setIsCartOpen())}
+                                >
+                                    <ShoppingBagTwoTone />
+                                </IconButton>
+                            </Badge>
                         </div>
                     </div>
                 )}

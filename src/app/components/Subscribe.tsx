@@ -7,7 +7,7 @@ function Subscribe() {
     const [ email, setEmail ] = useState<string>('')
 
     return (
-        <div className="w-4/5 my-20 mx-auto flex flex-col items-center justify-center bg-neutral-200 rounded-lg">
+        <div className="w-full md:w-4/5 my-10 mx-auto flex flex-col items-center justify-center bg-neutral-200 rounded-lg">
             <IconButton>
                 <MarkEmailReadOutlined fontSize="large" />
             </IconButton>

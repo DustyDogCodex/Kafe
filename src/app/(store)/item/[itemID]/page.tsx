@@ -41,7 +41,6 @@ function page() {
     async function getItemInfo() {
         axios.get(`http://localhost:3000/api/items/${itemID}`)
         .then(res => { 
-            console.log('response',res.data)
             setItem(res.data.itemInfo)
             setLoading(false)
         })
@@ -49,11 +48,6 @@ function page() {
             setError(err.message)
         })
     }
-
-    //display error message if server responds with error
-    /* if(error){
-        return <ServerErrorMessage message={error} />
-    } */
 
     useEffect(() => {
         getItemInfo()
@@ -63,7 +57,7 @@ function page() {
         <div className="flex min-h-screen flex-col items-center justify-between">
             <div className="container pt-20">
                 {/* item info */}
-                <div className="flex gap-10">
+                <div className="flex gap-10 flex-col md:flex-row">        
                     {loading
                         ?
                         <Loading />
@@ -80,7 +74,7 @@ function page() {
                             />
 
                             {/* item details */}
-                            <div className="pt-20">
+                            <div className="pt-5 px-2 md:pt-20">
                                 <h1 className="text-3xl font-semibold mb-5">{item?.name}</h1>
                                 <span className='text-2xl'>${item?.price}</span>
                                 <p className="mt-10 text-wrap text-xl">

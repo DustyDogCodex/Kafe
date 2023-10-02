@@ -11,12 +11,12 @@ function Hero() {
 
             {/* white text  */}
             <div className="flex flex-col w-full md:w-1/3 absolute top-[30%] md:top-[40%] left-0 md:left-10 text-white font-fauna">
-                <h1 className="text-3xl text-center md:text-left md:text-5xl">
+                <h1 className="text-xl md:text-5xl text-center md:text-left">
                     Discover better coffee, delivered fresh from the best roaster in the country
                 </h1>
 
                 {/* buttons */}
-                <div className="mt-5 flex items-center justify-center md:justify-start gap-10">
+                <div className="mt-5 flex items-center justify-center md:justify-start gap-5 md:gap-10">
                     <button className="bg-orange-500 py-3 px-8 rounded-xl font-bold">
                         GET STARTED
                     </button>

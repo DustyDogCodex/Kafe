@@ -22,20 +22,18 @@ function Offers() {
             {offersArray.map((offer,index) => 
                 <div 
                     key={index}
-                    className="flex even:flex-row-reverse items-center justify-between py-10 px-5"
+                    className="flex flex-col md:flex-row md:even:flex-row-reverse items-center justify-between py-10 px-5"
                 >
-                    <div className="w-1/2">
+                    <div className="w-full md:w-1/2 text-center md:text-left my-2">
                         <h2 className="text-2xl font-semibold mb-5">{offer.title}</h2>
                         <p className="text-lg font-fauna">{offer.text}</p>
                         <button className="mt-3 bg-orange-500 text-white px-5 py-2 rounded-lg">{offer.btnText}</button>
                     </div>
                     
-                    <Image 
+                    <img 
                         src={offer.image}
                         alt="offer image"
-                        width={600}
-                        height={450}
-                        className="rounded-xl"
+                        className="rounded-xl w-full md:w-1/2"
                     />
                 </div>
             )}

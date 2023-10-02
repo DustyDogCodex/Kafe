@@ -1,5 +1,3 @@
-import Image from "next/image"
-
 function Intro() {
     const titlesAndText: { title: string, text: string }[] = [
         {
@@ -32,7 +30,7 @@ function Intro() {
                 {titlesAndText.map((info,index) => 
                     <div
                         key={index} 
-                        className="border-r border-slate-300 last:border-none p-5"
+                        className="border-b md:border-r border-slate-300 last:border-none p-5"
                     >
                         <h2 className="text-2xl font-semibold mb-5">{info.title}</h2>
                         <p className="font-fauna text-lg">{info.text}</p>
@@ -42,17 +40,15 @@ function Intro() {
 
             {/* section with brands that love us */}
             <div className="bg-slate-100 flex flex-col items-center py-20 px-10">
-                <h2 className="text-3xl font-bold">"The best new innovation for coffee since the French Press"</h2>
+                <h2 className="text-3xl font-bold text-center md:text-left">"The best new innovation for coffee since the French Press"</h2>
                 {/* brand logos */}
-                <div className="mt-5 flex flex-wrap items-center gap-5">
+                <div className="mt-5 flex flex-wrap items-center justify-center gap-5">
                     {brandLogos.map((brand,index) => 
-                        <Image 
+                        <img 
                             key={index}
-                            src={brand}
+                            src={brand} 
                             alt={`${brand}'s logo`}
-                            height={60}
-                            width={160}
-                            /* className="h-16" */
+                            className="h-fit max-h-24 w-fit max-w-32 my-2"
                         />
                     )}
                 </div>

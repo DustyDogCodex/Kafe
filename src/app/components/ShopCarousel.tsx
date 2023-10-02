@@ -3,7 +3,6 @@ import { useState } from "react"
 import { mediaImages } from "../data"
 import { motion, AnimatePresence } from "framer-motion"
 import { NavigateBeforeRounded, NavigateNextRounded } from "@mui/icons-material"
-import { IconButton } from "@mui/material"
 
 function ShopCarousel() {
     const [ position, setPosition ] = useState<number>(0)
@@ -55,7 +54,7 @@ function ShopCarousel() {
 
     return (
         <div
-            className="relative h-[400px] md:h-[800px] w-[350px] md:w-full overflow-hidden object-cover"
+            className="relative h-[400px] md:h-[800px] w-full overflow-hidden object-cover"
         >
             <AnimatePresence initial={false} custom={direction}>
                 <motion.img 
