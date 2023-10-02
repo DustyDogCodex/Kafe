@@ -44,7 +44,7 @@ function Intro() {
             <div className="bg-slate-100 flex flex-col items-center py-20 px-10">
                 <h2 className="text-3xl font-bold">"The best new innovation for coffee since the French Press"</h2>
                 {/* brand logos */}
-                <div className="mt-5 flex items-center gap-5">
+                <div className="mt-5 flex flex-wrap items-center gap-5">
                     {brandLogos.map((brand,index) => 
                         <Image 
                             key={index}

@@ -1,7 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react'
 import useMediaQuery from '../hooks/useMediaQuery'
-import { Badge, Icon, IconButton } from '@mui/material'
+import { Badge, IconButton } from '@mui/material'
 import { Menu, Close, ShoppingBagTwoTone } from '@mui/icons-material'
 import Link from 'next/link'
 import { useAppDispatch, useAppSelector } from '@/state/hooks'
@@ -13,7 +13,7 @@ function NavBar() {
 
     //checking to see if window is above a small screen with custom hook
     const aboveSmallScreens: boolean = useMediaQuery("(min-width: 768px)")
-
+    
     //determining if navbar is at top of page or not.
     const [ topOfPage, setTopOfPage ] = useState<boolean>(true)
 
@@ -33,7 +33,7 @@ function NavBar() {
 
     return (
         <nav
-            className={`${topOfPage ? "" : "bg-orange-500"} fixed z-20 top-0 w-full flex items-center justify-center`}
+            className={`${topOfPage ? "" : "bg-orange-500"} fixed top-0 z-20 w-full flex items-center justify-center`}
         >
             <div
                 className='w-full flex items-center justify-between py-5 px-10 xl:w-4/5'
@@ -99,12 +99,12 @@ function NavBar() {
                     :
                     /* this is what NavBar will look like for smaller screens when menu is toggled off */
                     <button
-                        className="rounded-full p-2 flex items-center justify-center hover:scale-125 transition duration-300"
+                        className="rounded-full flex items-center justify-center hover:scale-125 transition duration-300"
                         onClick={() => setMenuToggled(true)}
                     >
-                        <Icon>
+                        <IconButton>
                             <Menu />
-                        </Icon>
+                        </IconButton>
                     </button>
                 }
 
@@ -113,23 +113,23 @@ function NavBar() {
                 {/* after user clicks on a link, the menu will close automatically */}
                 {(
                     <div 
-                        className={`${ aboveSmallScreens ? 'hidden' : '' } fixed ${ menuToggled ? 'top-0' : '-top-[250px]'} h-[250px] right-0 w-full bg-orange-500 rounded-b-xl ease-in-out duration-700`}
+                        className={`${ aboveSmallScreens ? 'hidden' : '' } fixed ${ menuToggled ? 'top-0' : '-top-[350px]'} h-[350px] right-0 w-full bg-orange-500 text-black rounded-b-xl ease-in-out duration-700`}
                     >
                         {/* X button on top to close menu */}
                         <div className="flex justify-end px-4 pt-5 mr-8">
                             <button 
                                 onClick={() => setMenuToggled(!menuToggled)}
-                                className="p-2 rounded-full flex items-center"
+                                className="rounded-full flex items-center"
                             >
-                                <Icon>
+                                <IconButton>
                                     <Close />
-                                </Icon>
+                                </IconButton>
                             </button>
                         </div>
 
                         {/* links inside menu */}
                         <div 
-                            className="flex flex-col items-center gap-8 text-2xl"
+                            className="flex flex-col items-center gap-5 text-xl text-black"
                             /* closes menu after a link is clicked */
                             onClick={() => setMenuToggled(!menuToggled)}
                         >

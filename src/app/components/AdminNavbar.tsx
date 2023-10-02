@@ -4,6 +4,7 @@ import useMediaQuery from '../hooks/useMediaQuery'
 import { Icon } from '@mui/material'
 import { Menu, Close } from '@mui/icons-material'
 import Link from 'next/link'
+import { signOut } from "next-auth/react"
 
 function AdminNavBar() {
     //using state to toggle navbar menu
@@ -51,12 +52,11 @@ function AdminNavBar() {
                         >
                             Settings
                         </Link>
-                        {/* for now, logout is directly redirecting to admin dashboard instead of an admin login page. Logout and auth will be set up after I set up a skeleton dashboard */}
-                        <Link
-                            href={'/admin'}
+                        <button
+                            onClick={() => signOut({ callbackUrl: 'http://localhost:3000' })}
                         >
                             Logout
-                        </Link>
+                        </button>
                     </div>
                     </>
                     :
@@ -74,7 +74,7 @@ function AdminNavBar() {
                 {/* after user clicks on a link, the menu will close automatically */}
                 {(
                     <div 
-                        className={`${ aboveSmallScreens ? 'hidden' : '' } fixed ${ menuToggled ? 'top-0' : '-top-[250px]'} h-[250px] right-0 w-full bg-black rounded-b-xl ease-in-out duration-700`}
+                        className={`${ aboveSmallScreens ? 'hidden' : '' } fixed ${ menuToggled ? 'top-0' : '-top-[275px]'} h-[275px] right-0 w-full bg-black rounded-b-xl ease-in-out duration-700`}
                     >
                         {/* X button on top to close menu */}
                         <div className="flex justify-end p-2">
@@ -103,10 +103,15 @@ function AdminNavBar() {
                                 Orders
                             </Link>
                             <Link
-                                href={'/admin'}
+                                href={'/admin/settings'}
+                            >
+                                Settings
+                            </Link>
+                            <button
+                                onClick={() => signOut({ callbackUrl: 'http://localhost:3000' })}
                             >
                                 Logout
-                            </Link>
+                            </button>
                         </div>
                     </div>
                 )}
